@@ -70,11 +70,13 @@ try:
             notify=obj.get('message') or ''
     if 'context7_query-docs' not in notify:
         raise RuntimeError('context7 MCP tools not detected')
+    if 'exa_web_search_exa' not in notify:
+        raise RuntimeError('exa MCP tools not detected')
     if 'jcodemunch_search_text' not in notify:
         raise RuntimeError('jcodemunch MCP tools not detected')
 
     print('Commands OK:', ', '.join(sorted(required)))
-    print('MCP OK: context7 + jcodemunch')
+    print('MCP OK: context7 + exa + jcodemunch')
 finally:
     proc.kill()
     try:

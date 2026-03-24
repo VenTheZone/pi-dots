@@ -1,6 +1,6 @@
 # pi-mcp-access
 
-A small `pi-coding-agent` extension package that bridges MCP tools into pi custom tools.
+A small `pi-coding-agent` extension package that bridges MCP servers into pi tools.
 
 ## Features
 
@@ -9,8 +9,11 @@ A small `pi-coding-agent` extension package that bridges MCP tools into pi custo
   - `sse`
   - `stdio`
 - dynamically registers discovered MCP tools as pi tools
-- preserves original MCP tool names when possible
-- adds `/mcp status`, `/mcp tools`, and `/mcp reload`
+- preserves MCP tool names when possible, with optional prefixes
+- adds:
+  - `/mcp status`
+  - `/mcp tools`
+  - `/mcp reload`
 
 ## Config
 
@@ -29,24 +32,45 @@ Example:
     "context7": {
       "transport": "streamable-http",
       "url": "https://mcp.context7.com/mcp",
-      "enabled": true
+      "enabled": true,
+      "toolPrefix": "context7_"
     },
-    "local-example": {
+    "exa": {
+      "transport": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true,
+      "toolPrefix": "exa_"
+    },
+    "jcodemunch": {
       "transport": "stdio",
-      "command": "npx",
-      "args": ["-y", "some-mcp-server"],
-      "enabled": false,
-      "toolPrefix": "local_"
+      "command": "uvx",
+      "args": ["jcodemunch-mcp"],
+      "enabled": true,
+      "toolPrefix": "jcodemunch_"
     }
   }
 }
 ```
 
-## Commands
+## Repo integration
 
-- `/mcp status`
-- `/mcp tools`
-- `/mcp reload`
+This repo already includes MCP wiring for:
+
+- Context7
+- Exa
+- JCodeMunch
+
+Repo-local project config lives at:
+- `pi-dotfiles/.pi/mcp.json`
+
+Global config example lives at:
+- `examples/mcp.global.example.json`
+
+For global setup from the repo root:
+
+```bash
+npm run install-global
+```
 
 ## Scripts
 
@@ -56,18 +80,3 @@ npm run typecheck
 npm run test
 npm run check
 ```
-
-## Repo integration
-
-This repo already includes project-local MCP config at `pi-dotfiles/.pi/mcp.json` for:
-
-- `context7`
-- `jcodemunch`
-
-For global setup, use:
-
-```bash
-./scripts/install-global.sh
-```
-
-or copy `examples/mcp.global.example.json` to `~/.pi/agent/mcp.json` and adjust as needed.

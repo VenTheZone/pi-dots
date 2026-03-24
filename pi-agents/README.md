@@ -2,38 +2,57 @@
 
 A local `pi-coding-agent` package that adds a `subagent` tool plus a bundled set of reusable agent definitions.
 
-## Included
+## Includes
 
-- subagent extension based on the pi example extension
-- bundled agents such as:
-  - `planner`
-  - `architect`
-  - `code-reviewer`
-  - `security-reviewer`
-  - `tdd-guide`
-  - `build-error-resolver`
-  - `doc-updater`
-  - `go-reviewer`
-  - `go-build-resolver`
-  - `database-reviewer`
-  - `rust-reviewer`
-  - `rust-clippy-fmt-check-tester`
-  - `context7-sdk-compliance`
-  - `python-reviewer`
-  - `scout`
-  - `reviewer`
-  - `worker`
-- workflow prompts:
-  - `/implement`
-  - `/scout-and-plan`
-  - `/implement-and-review`
+Bundled agents such as:
 
-## Notes
+- `planner`
+- `architect`
+- `code-reviewer`
+- `security-reviewer`
+- `tdd-guide`
+- `build-error-resolver`
+- `doc-updater`
+- `go-reviewer`
+- `go-build-resolver`
+- `database-reviewer`
+- `rust-reviewer`
+- `rust-clippy-fmt-check-tester`
+- `context7-sdk-compliance`
+- `python-reviewer`
+- `scout`
+- `reviewer`
+- `worker`
 
-- bundled package agents are always available
+Bundled workflow prompts:
+
+- `/implement`
+- `/scout-and-plan`
+- `/implement-and-review`
+
+## Behavior
+
+- bundled package agents are always available when this package is loaded
 - user agents from `~/.pi/agent/agents` can also be used
 - project agents from `.pi/agents` can be enabled with `agentScope: "both"` or `"project"`
 - project agents require confirmation by default when pi has a UI
+
+## Repo integration
+
+This repo's `pi-dotfiles/.pi/settings.json` already loads `pi-agents` automatically when you run `pi` from `pi-dotfiles/`.
+
+For setup from the repo root:
+
+```bash
+npm run setup
+npm run check
+```
+
+For broader availability across projects:
+
+```bash
+npm run install-global
+```
 
 ## Scripts
 
@@ -42,14 +61,4 @@ npm install
 npm run typecheck
 npm run test
 npm run check
-```
-
-## Repo integration
-
-This repo's `pi-dotfiles/.pi/settings.json` already loads `pi-agents` automatically when you run `pi` from `pi-dotfiles/`.
-
-For a broader install across projects, use:
-
-```bash
-./scripts/install-global.sh
 ```

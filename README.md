@@ -1,22 +1,33 @@
 # pi-dots
 
-A repo containing local `pi-coding-agent` packages and project dotfiles:
+A polished local `pi-coding-agent` setup with:
 
-- `./pi-dotfiles/` — converted prompts, skills, project docs, and `.pi` config
-- `./pi-mcp-access/` — MCP bridge extension for pi
-- `./pi-agents/` — subagent extension plus bundled agent definitions
-- `./pi-coding-dynamic-pruning/` — standalone dynamic context pruning package
+- `pi-dotfiles` — prompts, skills, docs, and project-local `.pi` config
+- `pi-mcp-access` — MCP bridge for pi
+- `pi-agents` — subagent support plus bundled agents
+
+MCP is configured for:
+- Context7
+- Exa
+- JCodeMunch
+
+## What this gives you
+
+Run `pi` with:
+- reusable prompt commands like `/plan`, `/implement`, and `/scout-and-plan`
+- bundled subagents like `planner`, `architect`, `worker`, and `reviewer`
+- MCP-backed tools for docs lookup, web search, and repo/code intelligence
 
 ## Prerequisites
 
 - Node.js 20+
 - npm
 - `pi`
-- `uvx` for JCodeMunch MCP
+- `uvx`
 
-## Fast local setup
+## Recommended setup
 
-For using this repo directly as a project:
+From the repo root:
 
 ```bash
 npm run setup
@@ -31,31 +42,15 @@ This uses the checked-in project config in `pi-dotfiles/.pi/` and automatically 
 - `pi-mcp-access`
 - `pi-agents`
 
-It also uses the project MCP config in `pi-dotfiles/.pi/mcp.json`, which enables:
-
-- Context7
-- JCodeMunch
-
-Useful commands once pi is running:
-
-- `/mcp tools`
-- `/implement <task>`
-- `/scout-and-plan <task>`
-- `/implement-and-review <task>`
-
 ## Global install
 
-If you want these packages available outside this repo's project-local config:
+To use the same packages from any directory:
 
 ```bash
 npm run install-global
 ```
 
-That will:
-
-- install npm dependencies for the local packages
-- run `pi install` for `pi-dotfiles`, `pi-mcp-access`, and `pi-agents`
-- create `~/.pi/agent/mcp.json` from `examples/mcp.global.example.json` if one does not already exist
+That installs the local pi packages globally and writes `~/.pi/agent/mcp.json` if needed.
 
 ## Validation
 
@@ -66,13 +61,28 @@ npm run check
 ```
 
 It validates:
-
 - `pi-mcp-access`
 - `pi-agents`
 - prompt command discovery from `pi-dotfiles`
-- MCP connectivity for Context7 and JCodeMunch
+- MCP connectivity for Context7, Exa, and JCodeMunch
+
+## Useful commands inside pi
+
+- `/mcp tools`
+- `/plan <task>`
+- `/implement <task>`
+- `/scout-and-plan <task>`
+- `/implement-and-review <task>`
+
+## Repo layout
+
+- `./pi-dotfiles/`
+- `./pi-mcp-access/`
+- `./pi-agents/`
+- `./scripts/`
+- `./examples/`
 
 ## Notes
 
-- The dynamic pruning package is implemented and tested as a standalone package. Live `.pi` integration remains deferred.
-- The repo intentionally ignores `node_modules/` and `dist/`.
+- The repo intentionally ignores `node_modules/`, `dist/`, and repo-root `.pi/` state.
+- The dynamic pruning package remains in the repo as standalone work, but it is not part of the active pi setup.

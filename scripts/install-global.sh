@@ -21,7 +21,7 @@ need_cmd uvx
 cd "$ROOT_DIR"
 
 echo "==> Installing npm dependencies needed by local packages"
-for dir in pi-mcp-access pi-agents pi-coding-dynamic-pruning; do
+for dir in pi-mcp-access pi-agents; do
   echo "--> $dir"
   (cd "$dir" && npm install)
 done
@@ -49,8 +49,13 @@ Installed local pi packages:
   - pi-mcp-access
   - pi-agents
 
-Global MCP config example:
+Global MCP config:
   $MCP_CONFIG_PATH
+
+Configured MCP servers:
+  - Context7
+  - Exa
+  - JCodeMunch
 
 You can now run pi in any project. If you want the repo-local project config,
 run pi from:

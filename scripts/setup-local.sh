@@ -19,14 +19,14 @@ need_cmd uvx
 cd "$ROOT_DIR"
 
 echo "==> Installing package dependencies"
-for dir in pi-mcp-access pi-agents pi-coding-dynamic-pruning; do
+for dir in pi-mcp-access pi-agents; do
   echo "--> $dir"
   (cd "$dir" && npm install)
 done
 
 if [[ "$RUN_CHECKS" == "1" ]]; then
   echo "==> Running checks"
-  for dir in pi-mcp-access pi-agents pi-coding-dynamic-pruning; do
+  for dir in pi-mcp-access pi-agents; do
     echo "--> $dir"
     (cd "$dir" && npm run check)
   done
@@ -50,6 +50,7 @@ Project MCP config is already present at:
 
 That config enables:
   - Context7
+  - Exa
   - JCodeMunch (via uvx jcodemunch-mcp)
 
 Useful commands inside pi:
