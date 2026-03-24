@@ -1,0 +1,16 @@
+{
+  "name": "pi-dotfiles",
+  "private": true,
+  "version": "0.1.0",
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "prompts": [
+      "./prompts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  }
+}

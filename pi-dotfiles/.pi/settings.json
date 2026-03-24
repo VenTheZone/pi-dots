@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "..",
+    "../../pi-mcp-access",
+    "../../pi-agents"
+  ]
+}
