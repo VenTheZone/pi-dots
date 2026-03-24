@@ -1,0 +1,11 @@
+{
+  "name": "pi-dots",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "setup": "./scripts/setup-local.sh",
+    "bootstrap-check": "./bootstrap-check.sh",
+    "check": "./bootstrap-check.sh",
+    "install-global": "./scripts/install-global.sh"
+  }
+}

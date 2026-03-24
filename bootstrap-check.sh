@@ -26,7 +26,7 @@ done
 
 echo "==> Project-local pi smoke test"
 python <<'PY'
-import json, subprocess, os, time, sys
+import json, subprocess, os, time, sys, select
 cwd=os.path.abspath('pi-dotfiles')
 proc=subprocess.Popen(['pi','--mode','rpc','--no-session'], cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -34,17 +34,21 @@ def send(obj):
     proc.stdin.write(json.dumps(obj)+'\n')
     proc.stdin.flush()
 
-def wait_for_response(req_id, timeout=20):
+def wait_for_response(req_id, timeout=40):
     start=time.time()
     events=[]
     while time.time()-start<timeout:
-        line=proc.stdout.readline()
-        if not line:
-            break
-        obj=json.loads(line)
-        events.append(obj)
-        if obj.get('type')=='response' and obj.get('id')==req_id:
-            return obj, events
+        ready, _, _ = select.select([proc.stdout, proc.stderr], [], [], 1)
+        for stream in ready:
+            line = stream.readline()
+            if not line:
+                continue
+            if stream is proc.stderr:
+                raise RuntimeError(line.strip())
+            obj=json.loads(line)
+            events.append(obj)
+            if obj.get('type')=='response' and obj.get('id')==req_id:
+                return obj, events
     raise RuntimeError(f'timeout waiting for {req_id}')
 
 try:

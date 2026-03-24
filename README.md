@@ -19,8 +19,8 @@ A repo containing local `pi-coding-agent` packages and project dotfiles:
 For using this repo directly as a project:
 
 ```bash
-./scripts/setup-local.sh
-./bootstrap-check.sh
+npm run setup
+npm run check
 cd pi-dotfiles
 pi
 ```
@@ -48,7 +48,7 @@ Useful commands once pi is running:
 If you want these packages available outside this repo's project-local config:
 
 ```bash
-./scripts/install-global.sh
+npm run install-global
 ```
 
 That will:
@@ -62,7 +62,7 @@ That will:
 Run the root bootstrap check:
 
 ```bash
-./bootstrap-check.sh
+npm run check
 ```
 
 It validates:
