@@ -6,6 +6,7 @@
     "setup": "./scripts/setup-local.sh",
     "bootstrap-check": "./bootstrap-check.sh",
     "check": "./bootstrap-check.sh",
-    "install-global": "./scripts/install-global.sh"
+    "install-global": "./scripts/install-global.sh",
+    "install-global-full": "./scripts/install-global-full.sh"
   }
 }

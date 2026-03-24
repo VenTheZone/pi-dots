@@ -1,0 +1,13 @@
+{
+  "name": "pi-dotfiles-specialist-skills",
+  "private": true,
+  "version": "0.1.0",
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

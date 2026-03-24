@@ -1,31 +1,60 @@
 # pi-dots
 
-A polished local `pi-coding-agent` setup with:
+A local `pi-coding-agent` setup with a small default install and optional add-on skill packs.
 
-- `pi-dotfiles` — prompts, skills, docs, and project-local `.pi` config
+## Packages
+
+- `pi-dotfiles` — prompts, 10 core skills, docs, and project-local `.pi` config
+- `pi-dotfiles-niche-skills` — optional stack-specific and special-purpose skills
+- `pi-dotfiles-specialist-skills` — optional standalone `/skill:specialist-*` roles
 - `pi-mcp-access` — MCP bridge for pi
 - `pi-agents` — subagent support plus bundled agents
 
-MCP is configured for:
+## Default vs optional skills
+
+### Default core skills
+
+These stay in the default package because they are broadly useful across most coding sessions:
+
+- `brainstorming`
+- `coding-standards`
+- `context7-base-code-review`
+- `context7-driven-development`
+- `iterative-retrieval`
+- `security-review`
+- `strategic-compact`
+- `tdd-workflow`
+- `verification-loop`
+- `visual-explainer`
+
+### Optional niche pack
+
+Install `pi-dotfiles-niche-skills` if you want extra skills for:
+
+- API and backend work
+- frontend and Python work
+- database and migration work
+- framework-specific stacks like Django, Spring Boot, and Go
+- document processing, browser automation, web search, and scraping
+- security testing workflows
+- writing polish via `humanizer`
+
+### Optional specialist pack
+
+Install `pi-dotfiles-specialist-skills` if you still want the old standalone specialist roles available as `/skill:specialist-*` commands.
+
+For most delegation tasks, the bundled agents in `pi-agents` are the better default.
+
+## MCP defaults
+
+This repo is wired for:
+
 - Context7
-- Exa
 - JCodeMunch
 
-## What this gives you
+See [INSTALL.md](./INSTALL.md) for step-by-step install paths.
 
-Run `pi` with:
-- reusable prompt commands like `/plan`, `/implement`, and `/scout-and-plan`
-- bundled subagents like `planner`, `architect`, `worker`, and `reviewer`
-- MCP-backed tools for docs lookup, web search, and repo/code intelligence
-
-## Prerequisites
-
-- Node.js 20+
-- npm
-- `pi`
-- `uvx`
-
-## Recommended setup
+## Quick start
 
 From the repo root:
 
@@ -36,7 +65,7 @@ cd pi-dotfiles
 pi
 ```
 
-This uses the checked-in project config in `pi-dotfiles/.pi/` and automatically loads:
+That uses the checked-in project config in `pi-dotfiles/.pi/` and loads:
 
 - `pi-dotfiles`
 - `pi-mcp-access`
@@ -44,13 +73,28 @@ This uses the checked-in project config in `pi-dotfiles/.pi/` and automatically 
 
 ## Global install
 
-To use the same packages from any directory:
+### Core-only global install
 
 ```bash
 npm run install-global
 ```
 
-That installs the local pi packages globally and writes `~/.pi/agent/mcp.json` if needed.
+This installs the lean default setup globally.
+
+### Full global install
+
+```bash
+npm run install-global-full
+```
+
+This installs the default setup plus both optional skill packs.
+
+### Add optional packs manually
+
+```bash
+pi install ./pi-dotfiles-niche-skills
+pi install ./pi-dotfiles-specialist-skills
+```
 
 ## Validation
 
@@ -61,10 +105,11 @@ npm run check
 ```
 
 It validates:
+
 - `pi-mcp-access`
 - `pi-agents`
 - prompt command discovery from `pi-dotfiles`
-- MCP connectivity for Context7, Exa, and JCodeMunch
+- MCP connectivity for Context7 and JCodeMunch
 
 ## Useful commands inside pi
 
@@ -77,6 +122,8 @@ It validates:
 ## Repo layout
 
 - `./pi-dotfiles/`
+- `./pi-dotfiles-niche-skills/`
+- `./pi-dotfiles-specialist-skills/`
 - `./pi-mcp-access/`
 - `./pi-agents/`
 - `./scripts/`
@@ -85,4 +132,4 @@ It validates:
 ## Notes
 
 - The repo intentionally ignores `node_modules/`, `dist/`, and repo-root `.pi/` state.
-- The dynamic pruning package remains in the repo as standalone work, but it is not part of the active pi setup.
+- The dynamic pruning package is still in the repo, but it is not part of the active default setup.

@@ -26,8 +26,10 @@ for dir in pi-mcp-access pi-agents; do
   (cd "$dir" && npm install)
 done
 
-echo "==> Installing core pi packages globally"
+echo "==> Installing all pi packages globally"
 pi install ./pi-dotfiles
+pi install ./pi-dotfiles-niche-skills
+pi install ./pi-dotfiles-specialist-skills
 pi install ./pi-mcp-access
 pi install ./pi-agents
 
@@ -42,16 +44,14 @@ fi
 
 cat <<EOF
 
-Global install complete.
+Full global install complete.
 
 Installed global pi packages:
   - pi-dotfiles
-  - pi-mcp-access
-  - pi-agents
-
-Optional packages available but not installed by default:
   - pi-dotfiles-niche-skills
   - pi-dotfiles-specialist-skills
+  - pi-mcp-access
+  - pi-agents
 
 Global MCP config:
   $MCP_CONFIG_PATH
@@ -60,14 +60,5 @@ Configured MCP servers:
   - Context7
   - JCodeMunch
 
-To add the optional packages later:
-  pi install ./pi-dotfiles-niche-skills
-  pi install ./pi-dotfiles-specialist-skills
-
-Or install everything in one step:
-  npm run install-global-full
-
-You can now run pi in any project. If you want the repo-local project config,
-run pi from:
-  $ROOT_DIR/pi-dotfiles
+You can now run pi in any project with the full skill set available.
 EOF

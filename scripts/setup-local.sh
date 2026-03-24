@@ -50,8 +50,11 @@ Project MCP config is already present at:
 
 That config enables:
   - Context7
-  - Exa
   - JCodeMunch (via uvx jcodemunch-mcp)
+
+Optional skill packs available but not loaded by default:
+  - ./pi-dotfiles-niche-skills
+  - ./pi-dotfiles-specialist-skills
 
 Useful commands inside pi:
   /mcp tools

@@ -1,0 +1,13 @@
+{
+  "name": "pi-dotfiles-niche-skills",
+  "private": true,
+  "version": "0.1.0",
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

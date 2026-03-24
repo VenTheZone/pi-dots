@@ -6,6 +6,8 @@ Complete navigation guide for the favorite-opencode-setup repository.
 
 **Purpose**: Personal OpenCode configuration with curated skills, agents, and tools for AI-assisted development.
 
+> Note: this codemap is a legacy reference from the original setup. The default `pi-dotfiles` package now keeps 10 core skills, many stack- and task-specific skills were moved into the optional `../pi-dotfiles-niche-skills` package, and standalone specialist-role skills were moved into `../pi-dotfiles-specialist-skills`.
+
 **Total Components**:
 - 47 Skills
 - 16 Agents  

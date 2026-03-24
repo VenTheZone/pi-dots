@@ -5,9 +5,10 @@ This project is a pi-coding-agent compatible fork of `favorite-opencode-setup`.
 ## What was ported
 
 - `prompts/*.md` converted from command templates
-- `skills/*` copied from the original setup
-- `skills/specialist-*` converted from standalone specialist prompts
+- a curated set of 10 core `skills/*` retained in the default package
 - `docs/` reference material
+
+Most stack- and task-specific skills were moved into the optional `pi-dotfiles-niche-skills` package, and standalone specialist-role skills were moved into the optional `pi-dotfiles-specialist-skills` package to keep the default package smaller.
 
 ## What was intentionally omitted
 
@@ -20,7 +21,9 @@ This project is a pi-coding-agent compatible fork of `favorite-opencode-setup`.
 
 - Use prompt templates like `/plan`, `/tdd`, `/code-review`, `/security`
 - Use skills via `/skill:name`
-- Standalone specialist roles are available as skills like `/skill:specialist-planner` or `/skill:specialist-code-reviewer`
+- Additional niche skills can be installed via the optional `pi-dotfiles-niche-skills` package
+- Standalone specialist-role skills can be installed via the optional `pi-dotfiles-specialist-skills` package
+- For delegation, prefer the bundled agents from `pi-agents`
 - MCP access is provided locally via the `pi-mcp-access` extension package in this repo
 - The local MCP config enables Context7 and JCodeMunch
 - Subagent support is provided locally via the `pi-agents` package in this repo

@@ -1,24 +1,38 @@
 # pi-dotfiles
 
-A `pi-coding-agent` compatible fork of the original favorite-opencode setup, adapted into a cleaner pi package layout.
+Core prompts and skills for `pi-coding-agent`.
 
-## Includes
+This package is the lean default layer in this repo. It keeps the always-useful workflows close at hand and leaves niche or overlapping skills in optional packages.
+
+## What is in this package
 
 - `prompts/` — converted command templates
-- `skills/` — imported skills plus converted specialist-role skills (`specialist-*`)
+- `skills/` — 10 core skills for general coding workflows
 - `AGENTS.md` — project guidance adapted for pi
 - `docs/` — supporting reference docs
 - `package.json` — pi package manifest
 - `.pi/settings.json` — project-local wiring for this repo
 - `.pi/mcp.json` — project-local MCP server config
 
-## What changed from the original setup
+## Core skills in this package
 
-- plugin/runtime wiring from the source setup was removed
-- specialist-agent routing was converted into normal pi prompts and skills
-- pi package directories (`prompts/`, `skills/`) are used instead of source-harness-specific layout
-- MCP support is provided through the local `pi-mcp-access` package in this repo
-- subagent support is provided through the local `pi-agents` package in this repo
+- `brainstorming`
+- `coding-standards`
+- `context7-base-code-review`
+- `context7-driven-development`
+- `iterative-retrieval`
+- `security-review`
+- `strategic-compact`
+- `tdd-workflow`
+- `verification-loop`
+- `visual-explainer`
+
+## Optional companion packages
+
+- `../pi-dotfiles-niche-skills` — extra skills for stacks, databases, testing, scraping, document work, and writing polish
+- `../pi-dotfiles-specialist-skills` — old standalone specialist-role skills
+- `../pi-mcp-access` — MCP bridge for pi
+- `../pi-agents` — subagent support and bundled agents
 
 ## MCP and agents
 
@@ -31,14 +45,15 @@ When you run pi from this directory, the repo-local config loads:
 The repo-local MCP config enables:
 
 - Context7
-- Exa
 - JCodeMunch
 
-Bundled subagent workflows come from `pi-agents`, including:
+Bundled subagent workflows from `pi-agents` include:
 
 - `/implement`
 - `/scout-and-plan`
 - `/implement-and-review`
+
+For step-by-step install paths, see the repo-level [INSTALL.md](../INSTALL.md).
 
 ## Quick start
 
@@ -61,24 +76,24 @@ Then try:
 - `/scout-and-plan ...`
 - `/implement-and-review ...`
 - `/skill:context7-base-code-review`
-- `/skill:specialist-planner`
+- `subagent` with bundled agents like `planner` and `code-reviewer`
 
-You can also use the `subagent` tool directly for bundled agents such as `planner`, `architect`, `worker`, `reviewer`, and `code-reviewer`.
-
-## Using it outside this repo
-
-Install the local packages:
+## Install from this repo
 
 ```bash
 pi install ./pi-dotfiles -l
 pi install ./pi-mcp-access -l
 pi install ./pi-agents -l
+# optional niche skill pack
+pi install ./pi-dotfiles-niche-skills -l
+# optional specialist-role skill pack
+pi install ./pi-dotfiles-specialist-skills -l
 ```
 
-Or from the repo root use:
+Or from the repo root:
 
 ```bash
 npm run install-global
 ```
 
-If you only install `pi-dotfiles`, you still get prompt templates and skills, but not the MCP bridge or subagent package.
+If you only install `pi-dotfiles`, you get the lean default prompts and core skills, but not the MCP bridge, subagent package, or optional skill packs.

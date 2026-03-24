@@ -57,8 +57,9 @@ Example:
 This repo already includes MCP wiring for:
 
 - Context7
-- Exa
 - JCodeMunch
+
+The global example config also shows how to add Exa if you want it.
 
 Repo-local project config lives at:
 - `pi-dotfiles/.pi/mcp.json`
