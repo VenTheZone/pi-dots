@@ -9,6 +9,7 @@ A local `pi-coding-agent` setup with a small default install and optional add-on
 - `pi-dotfiles-specialist-skills` — optional standalone `/skill:specialist-*` roles
 - `pi-mcp-access` — MCP bridge for pi
 - `pi-agents` — subagent support plus bundled agents
+- `pi-dynamic-model-providers` — dynamic OpenRouter, Kilo, and Cline-proxy model registration
 
 ## Why this changed
 
@@ -91,6 +92,7 @@ That uses the checked-in project config in `pi-dotfiles/.pi/` and loads:
 - `pi-dotfiles`
 - `pi-mcp-access`
 - `pi-agents`
+- `pi-dynamic-model-providers`
 
 ## Global install
 
@@ -100,7 +102,7 @@ That uses the checked-in project config in `pi-dotfiles/.pi/` and loads:
 npm run install-global
 ```
 
-This installs the lean default setup globally.
+This installs the lean default setup globally, including the dynamic provider extension for OpenRouter, Kilo Gateway, and Cline proxy.
 
 ### Full global install
 
@@ -108,13 +110,23 @@ This installs the lean default setup globally.
 npm run install-global-full
 ```
 
-This installs the default setup plus both optional skill packs.
+This installs the default setup, both optional skill packs, and the dynamic provider extension.
 
 ### Add optional packs manually
 
 ```bash
 pi install ./pi-dotfiles-niche-skills
 pi install ./pi-dotfiles-specialist-skills
+```
+
+### Provider credentials
+
+Common env vars for the dynamic provider extension:
+
+```bash
+export OPENROUTER_API_KEY=...
+export KILO_API_KEY=...
+export CLINE_PROXY_API_KEY=...
 ```
 
 ## Validation
@@ -129,12 +141,16 @@ It validates:
 
 - `pi-mcp-access`
 - `pi-agents`
+- `pi-dynamic-model-providers`
 - prompt command discovery from `pi-dotfiles`
 - MCP connectivity for Context7 and JCodeMunch
+- dynamic provider command availability for OpenRouter and Kilo Gateway
 
 ## Useful commands inside pi
 
 - `/mcp tools`
+- `/provider-models status`
+- `/provider-models refresh`
 - `/plan <task>`
 - `/implement <task>`
 - `/scout-and-plan <task>`
@@ -147,6 +163,7 @@ It validates:
 - `./pi-dotfiles-specialist-skills/`
 - `./pi-mcp-access/`
 - `./pi-agents/`
+- `./pi-dynamic-model-providers/`
 - `./scripts/`
 - `./examples/`
 

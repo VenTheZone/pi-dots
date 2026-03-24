@@ -19,7 +19,7 @@ need_cmd uvx
 cd "$ROOT_DIR"
 
 echo "==> Package checks"
-for dir in pi-mcp-access pi-agents; do
+for dir in pi-mcp-access pi-agents pi-dynamic-model-providers; do
   echo "--> $dir"
   (cd "$dir" && npm run check)
 done
@@ -73,8 +73,22 @@ try:
     if 'jcodemunch_search_text' not in notify:
         raise RuntimeError('jcodemunch MCP tools not detected')
 
+    send({'type':'prompt','message':'/provider-models status','id':'providers'})
+    resp, events = wait_for_response('providers')
+    if not resp.get('success'):
+        raise RuntimeError('provider-models status command failed')
+    provider_notify=''
+    for obj in events:
+        if obj.get('type')=='extension_ui_request' and obj.get('method')=='notify':
+            provider_notify=obj.get('message') or ''
+    if 'OpenRouter' not in provider_notify and 'openrouter' not in provider_notify:
+        raise RuntimeError('openrouter dynamic provider not detected')
+    if 'Kilo' not in provider_notify and 'kilo-gateway' not in provider_notify:
+        raise RuntimeError('kilo dynamic provider not detected')
+
     print('Commands OK:', ', '.join(sorted(required)))
     print('MCP OK: context7 + jcodemunch')
+    print('Dynamic providers OK: openrouter + kilo-gateway')
 finally:
     proc.kill()
     try:

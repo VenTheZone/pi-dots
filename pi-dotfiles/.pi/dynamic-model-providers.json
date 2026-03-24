@@ -1,0 +1,34 @@
+{
+  "cacheTtlHours": 12,
+  "providers": {
+    "openrouter": {
+      "enabled": true,
+      "modelsUrl": "https://openrouter.ai/api/v1/models?category=programming",
+      "apiKey": "OPENROUTER_API_KEY",
+      "maxModels": 200
+    },
+    "kilo-gateway": {
+      "enabled": true,
+      "apiKey": "KILO_API_KEY",
+      "maxModels": 200
+    },
+    "cline-proxy": {
+      "enabled": false,
+      "baseUrl": "http://127.0.0.1:8317/v1",
+      "modelsUrl": "http://127.0.0.1:8317/v1/models",
+      "apiKey": "CLINE_PROXY_API_KEY",
+      "authHeader": true,
+      "assumeFree": false,
+      "defaultContextWindow": 128000,
+      "defaultMaxTokens": 16384,
+      "modelOverrides": {
+        "gemini-2.5-pro": {
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 1048576,
+          "maxTokens": 65536
+        }
+      }
+    }
+  }
+}

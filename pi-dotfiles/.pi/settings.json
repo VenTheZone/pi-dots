@@ -2,6 +2,7 @@
   "packages": [
     "..",
     "../../pi-mcp-access",
-    "../../pi-agents"
+    "../../pi-agents",
+    "../../pi-dynamic-model-providers"
   ]
 }

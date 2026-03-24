@@ -44,6 +44,7 @@ The intent is:
 - `../pi-dotfiles-specialist-skills` — old standalone specialist-role skills
 - `../pi-mcp-access` — MCP bridge for pi
 - `../pi-agents` — subagent support and bundled agents
+- `../pi-dynamic-model-providers` — dynamic provider registration for OpenRouter, Kilo Gateway, and Cline proxy
 
 ## MCP and agents
 
@@ -52,11 +53,24 @@ When you run pi from this directory, the repo-local config loads:
 - `pi-dotfiles`
 - `pi-mcp-access`
 - `pi-agents`
+- `pi-dynamic-model-providers`
 
 The repo-local MCP config enables:
 
 - Context7
 - JCodeMunch
+
+The repo-local dynamic provider config enables:
+
+- OpenRouter
+- Kilo Gateway
+- Cline proxy support is included but disabled by default until configured
+
+Common env vars:
+
+- `OPENROUTER_API_KEY`
+- `KILO_API_KEY`
+- `CLINE_PROXY_API_KEY`
 
 Bundled subagent workflows from `pi-agents` include:
 
@@ -80,6 +94,8 @@ pi
 Then try:
 
 - `/mcp tools`
+- `/provider-models status`
+- `/provider-models refresh`
 - `/plan ...`
 - `/tdd ...`
 - `/code-review ...`
@@ -95,6 +111,7 @@ Then try:
 pi install ./pi-dotfiles -l
 pi install ./pi-mcp-access -l
 pi install ./pi-agents -l
+pi install ./pi-dynamic-model-providers -l
 # optional niche skill pack
 pi install ./pi-dotfiles-niche-skills -l
 # optional specialist-role skill pack

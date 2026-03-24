@@ -19,7 +19,7 @@ need_cmd uvx
 cd "$ROOT_DIR"
 
 echo "==> Installing package dependencies"
-for dir in pi-mcp-access pi-agents; do
+for dir in pi-mcp-access pi-agents pi-dynamic-model-providers; do
   echo "--> $dir"
   (cd "$dir" && npm install)
 done
@@ -44,6 +44,7 @@ Inside pi-dotfiles, project-local settings will load:
   - ../            (pi-dotfiles package resources)
   - ../../pi-mcp-access
   - ../../pi-agents
+  - ../../pi-dynamic-model-providers
 
 Project MCP config is already present at:
   $ROOT_DIR/pi-dotfiles/.pi/mcp.json
@@ -52,12 +53,22 @@ That config enables:
   - Context7
   - JCodeMunch (via uvx jcodemunch-mcp)
 
+Project dynamic provider config is already present at:
+  $ROOT_DIR/pi-dotfiles/.pi/dynamic-model-providers.json
+
+That config enables:
+  - OpenRouter
+  - Kilo Gateway
+  - Cline proxy support (disabled until configured)
+
 Optional skill packs available but not loaded by default:
   - ./pi-dotfiles-niche-skills
   - ./pi-dotfiles-specialist-skills
 
 Useful commands inside pi:
   /mcp tools
+  /provider-models status
+  /provider-models refresh
   /implement <task>
   /scout-and-plan <task>
   /implement-and-review <task>

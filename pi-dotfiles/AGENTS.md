@@ -26,6 +26,8 @@ Most stack- and task-specific skills were moved into the optional `pi-dotfiles-n
 - For delegation, prefer the bundled agents from `pi-agents`
 - MCP access is provided locally via the `pi-mcp-access` extension package in this repo
 - The local MCP config enables Context7 and JCodeMunch
+- Dynamic provider access is provided locally via the `pi-dynamic-model-providers` package in this repo
+- The local dynamic provider config enables OpenRouter and Kilo Gateway, with Cline proxy support available when configured
 - Subagent support is provided locally via the `pi-agents` package in this repo
 - Bundled subagents include roles like `planner`, `architect`, `worker`, `reviewer`, and `code-reviewer`
 - If an MCP server is unavailable, use the non-MCP fallback steps documented in the relevant skill or prompt
