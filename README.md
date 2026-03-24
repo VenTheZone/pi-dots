@@ -20,6 +20,7 @@ For using this repo directly as a project:
 
 ```bash
 ./scripts/setup-local.sh
+./bootstrap-check.sh
 cd pi-dotfiles
 pi
 ```
@@ -58,11 +59,18 @@ That will:
 
 ## Validation
 
+Run the root bootstrap check:
+
 ```bash
-cd pi-mcp-access && npm run check
-cd ../pi-agents && npm run check
-cd ../pi-coding-dynamic-pruning && npm run check
+./bootstrap-check.sh
 ```
+
+It validates:
+
+- `pi-mcp-access`
+- `pi-agents`
+- prompt command discovery from `pi-dotfiles`
+- MCP connectivity for Context7 and JCodeMunch
 
 ## Notes
 
