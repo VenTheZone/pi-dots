@@ -3,9 +3,7 @@
   "providers": {
     "openrouter": {
       "enabled": true,
-      "modelsUrl": "https://openrouter.ai/api/v1/models?category=programming",
-      "apiKey": "OPENROUTER_API_KEY",
-      "maxModels": 200
+      "apiKey": "OPENROUTER_API_KEY"
     },
     "kilo-gateway": {
       "enabled": true,
@@ -22,6 +20,18 @@
       "defaultContextWindow": 128000,
       "defaultMaxTokens": 16384,
       "modelOverrides": {}
+    },
+    "openrouter-free": {
+      "enabled": true,
+      "apiKey": "OPENROUTER_API_KEY"
+    },
+    "kilo-free": {
+      "enabled": true,
+      "apiKey": "KILO_API_KEY"
+    },
+    "cline-free": {
+      "enabled": true,
+      "apiKey": "CLINE_API_KEY"
     }
   }
 }

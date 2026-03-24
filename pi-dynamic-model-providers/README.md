@@ -9,6 +9,9 @@ This package registers providers at runtime and refreshes their model lists from
 - `openrouter`
 - `kilo-gateway`
 - `cline-proxy`
+- `openrouter-free`
+- `kilo-free`
+- `cline-free`
 
 ## What it does
 

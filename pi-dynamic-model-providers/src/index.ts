@@ -1,13 +1,52 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { DEFAULT_CONFIG, loadConfig, type DynamicProvidersConfig } from "./config.js";
-import { formatSummary, loadProviderModels, type LoadedProvider } from "./providers.js";
+import { formatSummary, loadProviderModels, readCache, toRuntimeProviderConfig, type LoadedProvider } from "./providers.js";
 
 const STATUS_KEY = "dynamic-provider-models";
 
+function createOAuthConfig(displayName: string) {
+  return {
+    name: `${displayName} (API Key)`,
+    async login(callbacks: any) {
+      const code = await callbacks.onPrompt({ message: `Enter your API key for ${displayName}:` });
+      if (!code || code.trim() === "") throw new Error("API key is required");
+      return {
+        access: code.trim(),
+        refresh: "",
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 365 * 10,
+      };
+    },
+    async refreshToken(credentials: any) {
+      return credentials;
+    },
+    getApiKey(credentials: any) {
+      return credentials.access;
+    },
+  };
+}
+
 export default function dynamicModelProviders(pi: ExtensionAPI): void {
-  let config: DynamicProvidersConfig = DEFAULT_CONFIG;
+  // Load config synchronously for initial static registration
+  let config = loadConfig(process.cwd());
   let loadedProviders = new Map<string, LoadedProvider>();
   const managedProviders = new Set<string>();
+
+  const applyProviders = (providers: LoadedProvider[]): void => {
+    for (const providerName of managedProviders) {
+      pi.unregisterProvider(providerName);
+    }
+    managedProviders.clear();
+
+    for (const entry of providers) {
+      if (!entry.runtimeConfig) continue;
+      
+      // Inject OAuth config so these providers appear in /login
+      entry.runtimeConfig.oauth = createOAuthConfig(entry.displayName);
+      
+      pi.registerProvider(entry.providerName, entry.runtimeConfig);
+      managedProviders.add(entry.providerName);
+    }
+  };
 
   const setStatus = (ctx: ExtensionContext): void => {
     const entries = [...loadedProviders.values()].filter((entry) => entry.summary.modelCount > 0);
@@ -19,18 +58,33 @@ export default function dynamicModelProviders(pi: ExtensionAPI): void {
     ctx.ui.setStatus(STATUS_KEY, `Models: ${text}`);
   };
 
-  const applyProviders = (providers: LoadedProvider[]): void => {
-    for (const providerName of managedProviders) {
-      pi.unregisterProvider(providerName);
-    }
-    managedProviders.clear();
-
-    for (const entry of providers) {
-      if (!entry.runtimeConfig || entry.runtimeConfig.models.length === 0) continue;
-      pi.registerProvider(entry.providerName, entry.runtimeConfig);
-      managedProviders.add(entry.providerName);
-    }
-  };
+  // Perform a static load from cache so providers are immediately available (e.g., for /login)
+  const initialCache = readCache();
+  const initialResults: LoadedProvider[] = [];
+  const enabledProviders = Object.entries(config.providers ?? {}).filter(([, provider]) => provider.enabled !== false);
+  
+  for (const [providerName, providerConfig] of enabledProviders) {
+    const cachedEntry = initialCache.providers[providerName];
+    const models = cachedEntry?.models ?? [];
+    const displayName = providerConfig.displayName ?? providerName;
+    const runtimeConfig = toRuntimeProviderConfig(providerConfig, models);
+    
+    const loaded: LoadedProvider = {
+      providerName,
+      displayName,
+      runtimeConfig,
+      summary: {
+        providerName,
+        displayName,
+        modelCount: models.length,
+        source: models.length > 0 ? "cache" : "stale-cache",
+        ageMinutes: cachedEntry ? Math.round((Date.now() - cachedEntry.timestamp) / 60000) : 0,
+      }
+    };
+    loadedProviders.set(providerName, loaded);
+    initialResults.push(loaded);
+  }
+  applyProviders(initialResults);
 
   const refreshProviders = async (ctx: ExtensionContext, forceRefresh: boolean): Promise<void> => {
     config = loadConfig(ctx.cwd, ctx);

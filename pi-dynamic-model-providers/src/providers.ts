@@ -21,6 +21,7 @@ export interface RuntimeProviderConfig {
   authHeader?: boolean;
   headers?: Record<string, string>;
   models: RuntimeProviderModel[];
+  oauth?: any;
 }
 
 export interface CachedProviderEntry {
@@ -315,7 +316,7 @@ function toCostPerMillion(value: unknown): number {
   return Number.NaN;
 }
 
-function toRuntimeProviderConfig(config: DynamicProviderConfig, models: RuntimeProviderModel[]): RuntimeProviderConfig {
+export function toRuntimeProviderConfig(config: DynamicProviderConfig, models: RuntimeProviderModel[]): RuntimeProviderConfig {
   const next: RuntimeProviderConfig = {
     api: config.api ?? "openai-completions",
     models,
@@ -367,7 +368,7 @@ function globMatch(pattern: string, value: string): boolean {
   return new RegExp(`^${escaped}$`, "i").test(value);
 }
 
-function readCache(): CacheFile {
+export function readCache(): CacheFile {
   try {
     const raw = JSON.parse(readFileSync(CACHE_PATH, "utf8")) as unknown;
     if (isRecord(raw) && isRecord(raw.providers)) {
