@@ -43,3 +43,13 @@ npm run typecheck
 npm run test
 npm run check
 ```
+
+## Repo integration
+
+This repo's `pi-dotfiles/.pi/settings.json` already loads `pi-agents` automatically when you run `pi` from `pi-dotfiles/`.
+
+For a broader install across projects, use:
+
+```bash
+./scripts/install-global.sh
+```

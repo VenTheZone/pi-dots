@@ -29,7 +29,15 @@ This package now uses standard pi package directories (`prompts/`, `skills/`) in
 
 ## Quick start
 
-### Use directly from this folder
+### Use directly from this repo
+
+From the repo root, run:
+
+```bash
+./scripts/setup-local.sh
+cd pi-dotfiles
+pi
+```
 
 This repo includes `pi-dotfiles/.pi/settings.json` pointing back to the package root and to the local `pi-mcp-access` and `pi-agents` packages, so running `pi` from this directory loads the package resources automatically.
 

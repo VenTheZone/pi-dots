@@ -56,3 +56,18 @@ npm run typecheck
 npm run test
 npm run check
 ```
+
+## Repo integration
+
+This repo already includes project-local MCP config at `pi-dotfiles/.pi/mcp.json` for:
+
+- `context7`
+- `jcodemunch`
+
+For global setup, use:
+
+```bash
+./scripts/install-global.sh
+```
+
+or copy `examples/mcp.global.example.json` to `~/.pi/agent/mcp.json` and adjust as needed.

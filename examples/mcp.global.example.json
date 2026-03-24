@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "context7": {
+      "transport": "streamable-http",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true,
+      "toolPrefix": "context7_"
+    },
+    "jcodemunch": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": ["jcodemunch-mcp"],
+      "enabled": true,
+      "toolPrefix": "jcodemunch_"
+    }
+  }
+}
