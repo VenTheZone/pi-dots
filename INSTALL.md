@@ -11,6 +11,18 @@ You need:
 - `pi`
 - `uvx`
 
+## Why the install paths changed
+
+The old setup bundled too much into the default experience.
+
+Now the install paths are explicit:
+
+- **core** if you want a smaller everyday setup
+- **full** if you want everything available everywhere
+- **custom mix** if you want to stay selective
+
+This keeps the default install lean without deleting any of the extra material.
+
 ## Option 1: Run from this repo
 
 Best if you want to try the setup first or work on the repo itself.

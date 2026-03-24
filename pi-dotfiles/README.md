@@ -4,6 +4,17 @@ Core prompts and skills for `pi-coding-agent`.
 
 This package is the lean default layer in this repo. It keeps the always-useful workflows close at hand and leaves niche or overlapping skills in optional packages.
 
+## Why this package is lean now
+
+This package is meant to be the default layer, so it now keeps only the most broadly useful workflows.
+
+The intent is:
+
+- keep the default skill list short
+- reduce overlap with `pi-agents`
+- move stack-specific guidance into an add-on pack
+- keep specialist-role prompts available without loading them by default
+
 ## What is in this package
 
 - `prompts/` — converted command templates

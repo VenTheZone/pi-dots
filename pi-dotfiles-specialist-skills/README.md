@@ -4,6 +4,12 @@ Optional specialist-role skills for `pi-coding-agent`.
 
 This package keeps the old standalone specialist roles available without putting them in the default skill list.
 
+## Why this pack exists
+
+These roles overlap with the bundled subagents in `pi-agents`.
+
+They were moved out of the default package so the base skill list stays smaller and less redundant, while people who still want `/skill:specialist-*` entry points can keep them.
+
 ## Included skills
 
 - `specialist-architect`

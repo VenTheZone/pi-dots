@@ -4,6 +4,12 @@ Optional add-on skills for `pi-coding-agent`.
 
 This package holds useful skills that do not need to be in the default install every day. It keeps the base setup smaller while still making the extra material easy to add when you want it.
 
+## Why this pack exists
+
+These skills are still useful, but they are not universal enough to justify loading by default in every session.
+
+This pack exists so the main package can stay focused while advanced or stack-specific guidance remains one install away.
+
 ## What is in this pack
 
 ### Workflow and architecture

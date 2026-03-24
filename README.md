@@ -10,6 +10,27 @@ A local `pi-coding-agent` setup with a small default install and optional add-on
 - `pi-mcp-access` — MCP bridge for pi
 - `pi-agents` — subagent support plus bundled agents
 
+## Why this changed
+
+This repo used to expose a very large default skill surface.
+
+That worked, but it also created a few problems:
+
+- too many overlapping ways to do the same thing
+- a noisier default skill list
+- more maintenance drift between docs, config, and actual usage
+- more cognitive overhead when the default package should feel lightweight
+
+The cleanup goal was not to remove capability. The goal was to make the default experience smaller and sharper, while keeping the rest available as optional packs.
+
+## What changed
+
+- `pi-dotfiles` was reduced to a 10-skill core package
+- stack-specific and special-purpose skills were moved into `pi-dotfiles-niche-skills`
+- old standalone `specialist-*` skills were moved into `pi-dotfiles-specialist-skills`
+- install flows were split into core-only and full global installs
+- docs were updated to match the new package layout and actual MCP defaults
+
 ## Default vs optional skills
 
 ### Default core skills
