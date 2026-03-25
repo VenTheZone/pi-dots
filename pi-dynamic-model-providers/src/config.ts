@@ -104,6 +104,15 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
+      headers: {
+        "X-Platform": "Visual Studio Code",
+        "X-Platform-Version": "1.109.3",
+        "X-Client-Type": "VSCode Extension",
+        "X-Client-Version": "3.63.0",
+        "X-Core-Version": "3.63.0",
+        "HTTP-Referer": "https://cline.bot",
+        "X-Title": "Cline"
+      },
       modelOverrides: {
         "minimax/minimax-m2.5": {
           name: "MiniMax M2.5 (free)",

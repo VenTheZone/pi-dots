@@ -104,8 +104,6 @@ favorite-opencode-setup/
 ### Specialized Development (6 skills)
 | Skill | Purpose | File |
 |-------|---------|------|
-| `mev-solana-bot` | Solana MEV bot CLI | `skills/mev-solana-bot/SKILL.md` |
-| `mev-bot-development` | MEV bot development | `skills/mev-bot-development/SKILL.md` |
 | `context7-base-code-review` | Context7 integration | `skills/context7-base-code-review/SKILL.md` |
 | `humanizer` | Text humanization | `skills/humanizer/SKILL.md` |
 | `using-web-scraping` | Web scraping | `skills/using-web-scraping/SKILL.md` |
@@ -217,7 +215,6 @@ favorite-opencode-setup/
 | `/instinct-import` | - | Import instincts | `commands/instinct-import.md` |
 | `/instinct-export` | - | Export instincts | `commands/instinct-export.md` |
 | `/evolve` | - | Cluster instincts | `commands/evolve.md` |
-| `/mev-bot` | - | MEV bot patterns | `commands/mev-bot.md` |
 
 ---
 
@@ -240,8 +237,8 @@ favorite-opencode-setup/
 2. `skills/tdd-workflow/SKILL.md` - TDD methodology
 3. `skills/security-review/SKILL.md` - Security review patterns
 4. `skills/coding-standards/SKILL.md` - Code quality standards
-5. `skills/mev-bot-development/SKILL.md` - MEV bot patterns
-6. `skills/mev-solana-bot/SKILL.md` - Solana MEV bot CLI
+5. `skills/humanizer/SKILL.md` - Text humanization
+6. `skills/security-review/SKILL.md` - Security review patterns
 7. `skills/hacker/SKILL.md` - Grayhat security testing
 8. `skills/hack-scope/SKILL.md` - VDP scope analysis
 
@@ -253,7 +250,6 @@ favorite-opencode-setup/
 ```bash
 skill: hacker                    # Load hacker skill
 skill: hack-scope               # Load hack-scope skill
-skill: mev-solana-bot           # Load MEV bot skill
 ```
 
 ### Using Agents
