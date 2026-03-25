@@ -24,6 +24,14 @@ export interface ModelOverride {
   compat?: Record<string, unknown>;
 }
 
+export interface StaticModel {
+  id: string;
+  name?: string;
+  contextWindow?: number;
+  maxTokens?: number;
+  reasoning?: boolean;
+}
+
 export interface DynamicProviderConfig {
   enabled?: boolean;
   kind?: ProviderKind;
@@ -43,6 +51,7 @@ export interface DynamicProviderConfig {
   include?: string[];
   exclude?: string[];
   modelOverrides?: Record<string, ModelOverride>;
+  models?: StaticModel[];
 }
 
 export interface DynamicProvidersConfig {
@@ -91,45 +100,6 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
-    },
-    "cline-free": {
-      enabled: true,
-      kind: "openai-compatible",
-      displayName: "Cline Free",
-      baseUrl: "https://api.cline.bot/api/v1",
-      modelsUrl: "",
-      api: "openai-completions",
-      apiKey: "CLINE_API_KEY",
-      authHeader: true,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-      headers: {
-        "X-Platform": "Visual Studio Code",
-        "X-Platform-Version": "1.109.3",
-        "X-Client-Type": "VSCode Extension",
-        "X-Client-Version": "3.63.0",
-        "X-Core-Version": "3.63.0",
-        "HTTP-Referer": "https://cline.bot",
-        "X-Title": "Cline"
-      },
-      modelOverrides: {
-        "minimax/minimax-m2.5": {
-          name: "MiniMax M2.5 (free)",
-          contextWindow: 1048576,
-          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
-        },
-        "kwaipilot/kat-coder-pro": {
-          name: "KAT-Coder Pro (free)",
-          contextWindow: 32768,
-          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
-        },
-        "z-ai/glm-5": {
-          name: "GLM-5 (free)",
-          contextWindow: 131072,
-          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
-        }
-      },
     },
   },
 };
@@ -246,6 +216,7 @@ function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConf
   if (typeof raw.defaultMaxTokens === "number") next.defaultMaxTokens = raw.defaultMaxTokens;
   if (typeof raw.defaultReasoning === "boolean") next.defaultReasoning = raw.defaultReasoning;
   if (isRecord(raw.modelOverrides)) next.modelOverrides = raw.modelOverrides as Record<string, ModelOverride>;
+  if (Array.isArray(raw.models)) next.models = raw.models as StaticModel[];
   return next;
 }
 

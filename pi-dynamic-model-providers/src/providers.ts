@@ -65,8 +65,10 @@ export async function loadProviderModels(
   const cache = readCache();
   const cached = cache.providers[providerName];
   
-  // If no modelsUrl but have modelOverrides, use static models from overrides
-  const hasStaticModels = !config.modelsUrl && config.modelOverrides && Object.keys(config.modelOverrides).length > 0;
+  // If no modelsUrl but have modelOverrides or models, use static models
+  const hasStaticModels = !config.modelsUrl && 
+    ((config.modelOverrides && Object.keys(config.modelOverrides).length > 0) ||
+     (Array.isArray(config.models) && config.models.length > 0));
   
   const configHash = stableHash({
     providerName,
@@ -81,6 +83,7 @@ export async function loadProviderModels(
     include: config.include,
     exclude: config.exclude,
     modelOverrides: config.modelOverrides,
+    models: config.models,
   });
   const ttlHours = config.ttlHours ?? globalTtlHours;
   const maxAgeMs = Math.max(1, ttlHours) * 60 * 60 * 1000;
@@ -335,6 +338,22 @@ function buildStaticModels(config: DynamicProviderConfig): RuntimeProviderModel[
   const overrides = config.modelOverrides ?? {};
   const defaultCost: ModelCost = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
   
+  // First add models from the static models array
+  if (Array.isArray(config.models)) {
+    for (const model of config.models) {
+      models.push({
+        id: model.id,
+        name: model.name ?? model.id.split("/").pop() ?? model.id,
+        reasoning: model.reasoning ?? config.defaultReasoning ?? false,
+        input: ["text"],
+        cost: { ...defaultCost },
+        contextWindow: model.contextWindow ?? config.defaultContextWindow ?? 128000,
+        maxTokens: model.maxTokens ?? config.defaultMaxTokens ?? 16384,
+      });
+    }
+  }
+  
+  // Then add models from modelOverrides (for backward compatibility)
   for (const [modelId, override] of Object.entries(overrides)) {
     if (!override) continue;
     

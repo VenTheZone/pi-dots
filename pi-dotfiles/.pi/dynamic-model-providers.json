@@ -8,45 +8,6 @@
     "kilo-gateway": {
       "enabled": true,
       "apiKey": "KILO_API_KEY"
-    },
-    "cline-free": {
-      "enabled": true,
-      "kind": "openai-compatible",
-      "displayName": "Cline Free",
-      "baseUrl": "https://api.cline.bot/api/v1",
-      "modelsUrl": "",
-      "api": "openai-completions",
-      "apiKey": "CLINE_API_KEY",
-      "authHeader": true,
-      "defaultContextWindow": 128000,
-      "defaultMaxTokens": 16384,
-      "defaultReasoning": false,
-      "headers": {
-        "X-Platform": "Visual Studio Code",
-        "X-Platform-Version": "1.109.3",
-        "X-Client-Type": "VSCode Extension",
-        "X-Client-Version": "3.63.0",
-        "X-Core-Version": "3.63.0",
-        "HTTP-Referer": "https://cline.bot",
-        "X-Title": "Cline"
-      },
-      "modelOverrides": {
-        "minimax/minimax-m2.5": {
-          "name": "MiniMax M2.5 (free)",
-          "contextWindow": 1048576,
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-        },
-        "kwaipilot/kat-coder-pro": {
-          "name": "KAT-Coder Pro (free)",
-          "contextWindow": 32768,
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-        },
-        "z-ai/glm-5": {
-          "name": "GLM-5 (free)",
-          "contextWindow": 131072,
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
-        }
-      }
     }
   }
 }
