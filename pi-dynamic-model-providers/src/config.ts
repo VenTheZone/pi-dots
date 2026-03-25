@@ -74,6 +74,9 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
+      modelOverrides: {
+        "openrouter/free": { name: "OpenRouter Auto-Router" },
+      },
     },
     "kilo-gateway": {
       enabled: true,
@@ -89,78 +92,35 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultMaxTokens: 16384,
       defaultReasoning: false,
     },
-    "cline-proxy": {
-      enabled: false,
-      kind: "openai-compatible",
-      displayName: "Cline Proxy",
-      baseUrl: "http://127.0.0.1:8317/v1",
-      api: "openai-completions",
-      apiKey: "CLINE_PROXY_API_KEY",
-      authHeader: true,
-      maxModels: 100,
-      assumeFree: false,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-    },
-    "openrouter-free": {
-      enabled: true,
-      kind: "openrouter",
-      displayName: "OpenRouter Free",
-      baseUrl: "https://openrouter.ai/api/v1",
-      modelsUrl: "https://openrouter.ai/api/v1/models",
-      api: "openai-completions",
-      apiKey: "OPENROUTER_API_KEY",
-      authHeader: true,
-      headers: {
-        "HTTP-Referer": "https://github.com/VenTheZone/pi-dots",
-        "X-Title": "pi-dots",
-      },
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-      include: [
-        "*free*"
-      ],
-    },
-    "kilo-free": {
-      enabled: true,
-      kind: "kilo-gateway",
-      displayName: "Kilo Free",
-      baseUrl: "https://api.kilo.ai/api/gateway",
-      modelsUrl: "https://api.kilo.ai/api/gateway/models",
-      api: "openai-completions",
-      apiKey: "KILO_API_KEY",
-      authHeader: true,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-      include: [
-        "kilo-auto/free",
-        "minimax/minimax-m2.5:free",
-        "z-ai/glm-5:free",
-        "arcee-ai/trinity-large-preview:free",
-        "corethink:free"
-      ],
-    },
     "cline-free": {
       enabled: true,
       kind: "openai-compatible",
       displayName: "Cline Free",
       baseUrl: "https://api.cline.bot/api/v1",
-      modelsUrl: "https://api.cline.bot/api/v1/models",
+      modelsUrl: "",
       api: "openai-completions",
       apiKey: "CLINE_API_KEY",
       authHeader: true,
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
-      include: [
-        "minimax/minimax-m2.5",
-        "kwaipilot/kat-coder-pro",
-        "z-ai/glm-5",
-        "deepseek/deepseek-chat"
-      ],
+      modelOverrides: {
+        "minimax/minimax-m2.5": {
+          name: "MiniMax M2.5 (free)",
+          contextWindow: 1048576,
+          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
+        },
+        "kwaipilot/kat-coder-pro": {
+          name: "KAT-Coder Pro (free)",
+          contextWindow: 32768,
+          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
+        },
+        "z-ai/glm-5": {
+          name: "GLM-5 (free)",
+          contextWindow: 131072,
+          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }
+        }
+      },
     },
   },
 };
@@ -230,7 +190,7 @@ export function mergeConfig(base: DynamicProvidersConfig, raw: unknown): Dynamic
 function withComputedDefaults(config: DynamicProvidersConfig): DynamicProvidersConfig {
   const providers = { ...(config.providers ?? {}) };
   for (const [name, provider] of Object.entries(providers)) {
-    if (!provider.modelsUrl && provider.baseUrl) {
+    if (provider.modelsUrl === undefined && provider.baseUrl) {
       providers[name] = {
         ...provider,
         modelsUrl: provider.baseUrl.replace(/\/$/, "") + "/models",
@@ -276,6 +236,7 @@ function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConf
   if (typeof raw.defaultContextWindow === "number") next.defaultContextWindow = raw.defaultContextWindow;
   if (typeof raw.defaultMaxTokens === "number") next.defaultMaxTokens = raw.defaultMaxTokens;
   if (typeof raw.defaultReasoning === "boolean") next.defaultReasoning = raw.defaultReasoning;
+  if (isRecord(raw.modelOverrides)) next.modelOverrides = raw.modelOverrides as Record<string, ModelOverride>;
   return next;
 }
 

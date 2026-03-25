@@ -40,7 +40,7 @@ export interface ProviderSummary {
   providerName: string;
   displayName: string;
   modelCount: number;
-  source: "live" | "cache" | "stale-cache" | "builtin-fallback";
+  source: "live" | "cache" | "stale-cache" | "builtin-fallback" | "static";
   ageMinutes: number;
   fetchedFrom?: string;
   error?: string;
@@ -64,6 +64,10 @@ export async function loadProviderModels(
   const displayName = config.displayName ?? providerName;
   const cache = readCache();
   const cached = cache.providers[providerName];
+  
+  // If no modelsUrl but have modelOverrides, use static models from overrides
+  const hasStaticModels = !config.modelsUrl && config.modelOverrides && Object.keys(config.modelOverrides).length > 0;
+  
   const configHash = stableHash({
     providerName,
     kind: config.kind,
@@ -97,6 +101,31 @@ export async function loadProviderModels(
         source: "cache",
         ageMinutes: Math.round((now - cached.timestamp) / 60000),
         ...(cached.fetchedFrom ? { fetchedFrom: cached.fetchedFrom } : {}),
+      }),
+    };
+  }
+
+  // If static models from overrides, use those directly
+  if (hasStaticModels) {
+    const models = buildStaticModels(config);
+    const entry = makeCachedProviderEntry({
+      providerName,
+      timestamp: now,
+      configHash,
+      models,
+    });
+    cache.providers[providerName] = entry;
+    writeCache(cache);
+    return {
+      providerName,
+      displayName,
+      runtimeConfig: toRuntimeProviderConfig(config, models),
+      summary: makeSummary({
+        providerName,
+        displayName,
+        modelCount: models.length,
+        source: "static",
+        ageMinutes: 0,
       }),
     };
   }
@@ -299,6 +328,37 @@ export function formatPriceLabel(cost: ModelCost): string {
   if (isUnknown) return "price unknown";
   if (cost.input === 0 && cost.output === 0 && cost.cacheRead === 0 && cost.cacheWrite === 0) return "free";
   return `$${formatMoney(cost.input)}/$${formatMoney(cost.output)}`;
+}
+
+function buildStaticModels(config: DynamicProviderConfig): RuntimeProviderModel[] {
+  const models: RuntimeProviderModel[] = [];
+  const overrides = config.modelOverrides ?? {};
+  const defaultCost: ModelCost = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
+  
+  for (const [modelId, override] of Object.entries(overrides)) {
+    if (!override) continue;
+    
+    const baseName = override.name ?? modelId.split("/").pop() ?? modelId;
+    const name = `${baseName}`;
+    const cost: ModelCost = {
+      input: override.cost?.input ?? 0,
+      output: override.cost?.output ?? 0,
+      cacheRead: override.cost?.cacheRead ?? 0,
+      cacheWrite: override.cost?.cacheWrite ?? 0,
+    };
+    
+    models.push({
+      id: modelId,
+      name,
+      reasoning: override.reasoning ?? false,
+      input: override.input ?? ["text"],
+      cost,
+      contextWindow: override.contextWindow ?? config.defaultContextWindow ?? 128000,
+      maxTokens: override.maxTokens ?? config.defaultMaxTokens ?? 16384,
+    });
+  }
+  
+  return models;
 }
 
 function formatMoney(value: number): string {

@@ -7,38 +7,28 @@
     },
     "kilo-gateway": {
       "enabled": true,
-      "apiKey": "KILO_API_KEY",
-      "maxModels": 200
-    },
-    "cline-proxy": {
-      "enabled": false,
-      "baseUrl": "http://127.0.0.1:8317/v1",
-      "modelsUrl": "http://127.0.0.1:8317/v1/models",
-      "apiKey": "CLINE_PROXY_API_KEY",
-      "authHeader": true,
-      "assumeFree": false,
-      "defaultContextWindow": 128000,
-      "defaultMaxTokens": 16384,
-      "modelOverrides": {
-        "gemini-2.5-pro": {
-          "reasoning": true,
-          "input": ["text", "image"],
-          "contextWindow": 1048576,
-          "maxTokens": 65536
-        }
-      }
-    },
-    "openrouter-free": {
-      "enabled": true,
-      "apiKey": "OPENROUTER_API_KEY"
-    },
-    "kilo-free": {
-      "enabled": true,
       "apiKey": "KILO_API_KEY"
     },
     "cline-free": {
       "enabled": true,
-      "apiKey": "CLINE_API_KEY"
+      "apiKey": "CLINE_API_KEY",
+      "modelOverrides": {
+        "minimax/minimax-m2.5": {
+          "name": "MiniMax M2.5 (free)",
+          "contextWindow": 1048576,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        "kwaipilot/kat-coder-pro": {
+          "name": "KAT-Coder Pro (free)",
+          "contextWindow": 32768,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        },
+        "z-ai/glm-5": {
+          "name": "GLM-5 (free)",
+          "contextWindow": 131072,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }
+      }
     }
   }
 }
