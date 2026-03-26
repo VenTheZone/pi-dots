@@ -108,7 +108,7 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       baseUrl: "https://api.cline.bot/api/v1",
       modelsUrl: "https://api.cline.bot/api/v1/ai/cline/models",
       api: "openai-completions",
-      apiKey: "CLINE_API_KEY",
+      // Note: apiKey not set - uses OAuth credentials from /login instead
       authHeader: true,
       headers: {
         "HTTP-Referer": "https://cline.bot",
