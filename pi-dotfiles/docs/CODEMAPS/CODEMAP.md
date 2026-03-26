@@ -2,23 +2,22 @@
 
 **Last Updated:** 2026-03-26
 
-pi-coding-agent dotfiles - copy what you need.
-
 ---
 
 ## Packages
 
-| Package | Location | Skills |
-|---------|----------|--------|
-| Core | `pi-dotfiles/skills/` | 12 |
-| Niche | `pi-dotfiles-niche-skills/skills/` | 33 |
-| Specialist | `pi-dotfiles-specialist-skills/skills/` | 16 |
+| Package | Path | Description |
+|---------|------|-------------|
+| Core | `pi-dotfiles/` | 12 skills, settings, MCP config |
+| Niche | `pi-dotfiles-niche-skills/` | 33 extra skills |
+| Specialist | `pi-dotfiles-specialist-skills/` | 16 specialist roles |
+| MCP Access | `pi-mcp-access/` | MCP bridge |
+| Agents | `pi-agents/` | Subagents |
+| Dynamic Providers | `pi-dynamic-model-providers/` | Model providers |
 
 ---
 
 ## Core Skills (12)
-
-Located in `pi-dotfiles/skills/`:
 
 | Skill | Purpose |
 |-------|---------|
@@ -37,41 +36,63 @@ Located in `pi-dotfiles/skills/`:
 
 ---
 
-## Directory Structure
+## Niche Skills (33)
 
-```
-pi-dots/
-├── README.md              # Quick install guide
-├── INSTALL.md             # Detailed install
-├── bootstrap-check.sh     # (unused, can delete)
-│
-├── pi-dotfiles/           # Core
-│   ├── skills/            # 12 skills
-│   └── .pi/               # settings.json, mcp.json
-│
-├── pi-dotfiles-niche-skills/  # Optional (34)
-│   └── skills/
-│
-├── pi-dotfiles-specialist-skills/  # Optional (16)
-│   └── skills/
-│
-├── pi-mcp-access/         # MCP bridge
-├── pi-agents/             # Subagents
-├── pi-dynamic-model-providers/  # Model providers
-├── examples/              # Config examples
-└── pi-coding-dynamic-pruning/  # (unused)
-```
+| Category | Skills |
+|----------|--------|
+| Languages | golang-patterns, golang-testing, python-patterns, python-testing, java-coding-standards, cpp-testing, jpa-patterns |
+| Frameworks | django-patterns, django-security, django-tdd, springboot-patterns, springboot-security, springboot-tdd |
+| DevOps | docker-patterns, deployment-patterns |
+| Database | postgres-patterns, database-migrations, clickhouse-io |
+| Security | hacker, hack-scope, security-scan |
+| Testing | e2e-testing, verification-loop, eval-harness, browser-automation-agent |
+| Other | api-design, frontend-patterns, backend-patterns, continuous-learning, continuous-learning-v2, project-guidelines-example, configure-ecc, nutrient-document-processing, using-web-scraping, web-search-api |
+
+---
+
+## Specialist Skills (16)
+
+| Skill | Purpose |
+|-------|---------|
+| specialist-auditor | Code auditing |
+| specialist-debugger | Debugging |
+| specialist-documenter | Documentation |
+| specialist-evaluator | Evaluation |
+| specialist-generator | Code generation |
+| specialist-implementer | Implementation |
+| specialist-investigator | Investigation |
+| specialist-planner | Planning |
+| specialist-refactorer | Refactoring |
+| specialist-reviewer | Code review |
+| specialist-security | Security |
+| specialist-tester | Testing |
+| specialist-toolsmith | Tool creation |
+| specialist-troubleshooter | Troubleshooting |
+| specialist-validator | Validation |
+| specialist-visualizer | Visualization |
+
+---
+
+## Slash Commands (26)
+
+| Category | Commands |
+|----------|----------|
+| Planning | `/plan`, `/orchestrate`, `/checkpoint` |
+| Code | `/code-review`, `/refactor-clean`, `/build-fix` |
+| Testing | `/tdd`, `/e2e`, `/test-coverage`, `/verify` |
+| Languages | `/go-review`, `/go-test`, `/go-build`, `/rust-review`, `/rust-clippy-fmt-check` |
+| Security | `/security` |
+| Docs | `/update-docs`, `/update-codemaps` |
+| Learning | `/learn`, `/evolve`, `/instinct-status`, `/instinct-import`, `/instinct-export` |
+| Other | `/eval`, `/setup-pm`, `/skill-create` |
 
 ---
 
 ## Install
 
 ```bash
-# Copy skills you want
 mkdir -p ~/.pi/agent/skills
 cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
-
-# Copy settings
 cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
 cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
@@ -80,9 +101,12 @@ cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 
 ## Model Providers
 
-- **OpenRouter** - needs API key
-- **Kilo Gateway** - needs API key
+| Provider | Cost | Auth |
+|----------|------|------|
+| OpenRouter | Paid | API Key |
+| Kilo Gateway | Paid | API Key |
 
 ---
 
 *Generated: 2026-03-26*
+*Repository: https://github.com/VenTheZone/pi-dots*

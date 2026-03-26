@@ -4,72 +4,74 @@ Quick setup for pi-coding-agent. Copy what you want.
 
 ---
 
-## Copy specific skills
+## Packages
 
-```bash
-mkdir -p ~/.pi/agent/skills
-cp -r pi-dotfiles/skills/<skill-name> ~/.pi/agent/skills/
-```
-
-Available skills in `pi-dotfiles/skills/`:
-- brainstorming
-- coding-standards
-- context7-base-code-review
-- context7-driven-development
-- humanizer
-- iterative-retrieval
-- planning-with-files
-- security-review
-- strategic-compact
-- tdd-workflow
-- verification-loop
-- visual-explainer
-
-Example:
-```bash
-cp -r pi-dotfiles/skills/tdd-workflow ~/.pi/agent/skills/
-cp -r pi-dotfiles/skills/brainstorming ~/.pi/agent/skills/
-```
+| Package | Description |
+|---------|-------------|
+| `pi-dotfiles` | Core skills, settings, MCP config |
+| `pi-dotfiles-niche-skills` | 33 extra skills (Docker, Python, Go, etc.) |
+| `pi-dotfiles-specialist-skills` | 16 specialist roles |
+| `pi-mcp-access` | MCP bridge |
+| `pi-agents` | Subagents |
+| `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway |
 
 ---
 
-## Copy all core skills
+## Core Skills (12)
+
+| Skill | Use for |
+|-------|---------|
+| brainstorming | Feature planning |
+| coding-standards | TypeScript/JS/React best practices |
+| context7-base-code-review | Look up docs |
+| context7-driven-development | Use docs while coding |
+| humanizer | Polish documentation |
+| iterative-retrieval | Progressive context |
+| planning-with-files | File-based task planning |
+| security-review | Auth, secrets, API security |
+| strategic-compact | Manual context compaction |
+| tdd-workflow | Test-driven development |
+| verification-loop | Verify your work |
+| visual-explainer | HTML diagrams |
+
+---
+
+## Niche Skills (33)
+
+Available in `pi-dotfiles-niche-skills/skills/`:
+
+| Category | Skills |
+|----------|--------|
+| Languages | golang-patterns, python-patterns, java-coding-standards, cpp-testing |
+| Frameworks | django-patterns, springboot-patterns |
+| DevOps | docker-patterns, deployment-patterns |
+| Database | postgres-patterns, database-migrations, clickhouse-io |
+| Security | hacker, hack-scope, security-scan |
+| Testing | e2e-testing, eval-harness |
+| Other | api-design, frontend-patterns, backend-patterns, continuous-learning, etc. |
+
+---
+
+## Install
 
 ```bash
 mkdir -p ~/.pi/agent/skills
 cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
-```
-
----
-
-## Copy extra skills
-
-```bash
-# 34 niche skills (Docker, Python, Go, etc.)
-cp -r pi-dotfiles-niche-skills/skills/* ~/.pi/agent/skills/
-
-# 16 specialist roles
-cp -r pi-dotfiles-specialist-skills/skills/* ~/.pi/agent/skills/
-```
-
----
-
-## Copy settings
-
-```bash
 cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
 cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
 
----
-
-## Model providers (optional)
+Or copy specific skills:
 
 ```bash
-cp examples/dynamic-model-providers.global.example.json ~/.pi/agent/dynamic-model-providers.json
+cp -r pi-dotfiles/skills/tdd-workflow ~/.pi/agent/skills/
 ```
 
-Edit to add your API key.
+---
+
+## Commands
+
+See `pi-dotfiles/prompts/commands.md` for all `/` commands (26 total).
 
 ---
 
@@ -78,7 +80,3 @@ Edit to add your API key.
 ```bash
 pi --eval "/mcp tools"
 ```
-
-## Commands
-
-See `pi-dotfiles/prompts/commands.md` for all available `/` commands.
