@@ -1,17 +1,11 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { DEFAULT_CONFIG, loadConfig, type DynamicProvidersConfig } from "./config.js";
-import { createQwenOAuthConfig as createQwenOAuthLikeConfig } from "./qwen-oauth.js";
 import { formatSummary, loadProviderModels, readCache, toRuntimeProviderConfig, type LoadedProvider } from "./providers.js";
 
 const STATUS_KEY = "dynamic-provider-models";
 
 function createOAuthConfig(displayName: string, providerName: string) {
-  // For roocode, try to read Qwen OAuth credentials from ~/.qwen/oauth_creds.json
-  if (providerName.includes("roocode") || providerName.includes("qwen")) {
-    return createQwenOAuthLikeConfig(displayName);
-  }
-
-  // For other providers (OpenRouter, Kilo), use API key prompt
+  // For all providers, use API key prompt
   return {
     name: `${displayName} (API Key)`,
     async login(callbacks: any) {

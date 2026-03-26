@@ -68,21 +68,6 @@ pi install npm:pi-dotfiles-specialist-skills
 |----------|------|-------|
 | Kilo Gateway | Paid | Get API key, then `/login kilo-gateway` |
 | OpenRouter | Paid | Get API key, then `/login openrouter` |
-| Qwen OAuth | FREE | See below |
-
-### Qwen OAuth (free, 2000/day)
-
-```bash
-# 1. Install Qwen CLI
-npm install -g @qwen-code/qwen-code
-
-# 2. Authenticate (opens browser)
-qwen
-# Select "Qwen OAuth" → log in
-
-# 3. Use in pi
-pi --model qwen/qwen3-coder-plus
-```
 
 ---
 
