@@ -1,84 +1,112 @@
 # pi-dots
 
-A local `pi-coding-agent` setup with a small default install and optional add-on skill packs.
+Your pi-coding-agent setup. Keep it simple, expand as needed.
 
-## Packages
+---
 
-- `pi-dotfiles` — prompts, 10 core skills, docs, and project-local `.pi` config
-- `pi-dotfiles-niche-skills` — optional stack-specific and special-purpose skills
-- `pi-dotfiles-specialist-skills` — optional standalone `/skill:specialist-*` roles
-- `pi-mcp-access` — MCP bridge for pi
-- `pi-agents` — subagent support plus bundled agents
-- `pi-dynamic-model-providers` — dynamic OpenRouter, Kilo, and Cline-proxy model registration
+## One-line install
 
-## Why this changed
+```bash
+curl -fsSL https://raw.githubusercontent.com/VenTheZone/pi-dots/main/scripts/install-global-full.sh | bash
+```
 
-This repo used to expose a very large default skill surface.
+Or see [Manual setup](#manual-setup) below.
 
-That worked, but it also created a few problems:
+---
 
-- too many overlapping ways to do the same thing
-- a noisier default skill list
-- more maintenance drift between docs, config, and actual usage
-- more cognitive overhead when the default package should feel lightweight
+## What's included
 
-The cleanup goal was not to remove capability. The goal was to make the default experience smaller and sharper, while keeping the rest available as optional packs.
+| Package | Purpose |
+|---------|---------|
+| `pi-dotfiles` | 12 core skills, prompts, settings |
+| `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway, Qwen OAuth |
+| `pi-mcp-access` | MCP bridge |
+| `pi-agents` | Bundled subagents |
 
-## What changed
+---
 
-- `pi-dotfiles` was reduced to a 10-skill core package
-- stack-specific and special-purpose skills were moved into `pi-dotfiles-niche-skills`
-- old standalone `specialist-*` skills were moved into `pi-dotfiles-specialist-skills`
-- install flows were split into core-only and full global installs
-- docs were updated to match the new package layout and actual MCP defaults
+## Core skills (included)
 
-## Default vs optional skills
+| Skill | Use it for |
+|-------|------------|
+| `brainstorming` | Planning features/tasks |
+| `coding-standards` | TypeScript, JS, React, Node best practices |
+| `context7-base-code-review` | Looking up docs |
+| `context7-driven-development` | Using docs while coding |
+| `humanizer` | Polishing documentation |
+| `iterative-retrieval` | Progressive context retrieval |
+| `planning-with-files` | File-based task planning (Manus-style) |
+| `security-review` | Auth, secrets, API security |
+| `strategic-compact` | Manual context compaction |
+| `tdd-workflow` | Test-driven development |
+| `verification-loop` | Verifying your work |
+| `visual-explainer` | HTML diagrams and visualizations |
 
-### Default core skills
+---
 
-These stay in the default package because they are broadly useful across most coding sessions:
+## Optional add-ons
 
-- `brainstorming`
-- `coding-standards`
-- `context7-base-code-review`
-- `context7-driven-development`
-- `iterative-retrieval`
-- `security-review`
-- `strategic-compact`
-- `tdd-workflow`
-- `verification-loop`
-- `visual-explainer`
+### Niche skills (34 more)
+Stack-specific and workflow skills for Docker, Python, Go, Django, etc.
 
-### Optional niche pack
+```bash
+pi install npm:pi-dotfiles-niche-skills
+```
 
-Install `pi-dotfiles-niche-skills` if you want extra skills for:
+### Specialist skills (16 more)
+Standalone specialist roles as `/skill:specialist-*` commands.
 
-- API and backend work
-- frontend and Python work
-- database and migration work
-- framework-specific stacks like Django, Spring Boot, and Go
-- document processing, browser automation, web search, and scraping
-- security testing workflows
-- writing polish via `humanizer`
+```bash
+pi install npm:pi-dotfiles-specialist-skills
+```
 
-### Optional specialist pack
+---
 
-Install `pi-dotfiles-specialist-skills` if you still want the old standalone specialist roles available as `/skill:specialist-*` commands.
+## Model providers
 
-For most delegation tasks, the bundled agents in `pi-agents` are the better default.
+| Provider | Cost | Setup |
+|----------|------|-------|
+| Kilo Gateway | Paid | Get API key, then `/login kilo-gateway` |
+| OpenRouter | Paid | Get API key, then `/login openrouter` |
+| Qwen OAuth | FREE | See below |
 
-## MCP defaults
+### Qwen OAuth (free, 2000/day)
 
-This repo is wired for:
+```bash
+# 1. Install Qwen CLI
+npm install -g @qwen-code/qwen-code
 
-- Context7
-- JCodeMunch
+# 2. Authenticate (opens browser)
+qwen
+# Select "Qwen OAuth" → log in
 
-See [INSTALL.md](./INSTALL.md) for step-by-step install paths.
+# 3. Use in pi
+pi --model qwen/qwen3-coder-plus
+```
 
-## Quick start
+---
 
-From the repo root:
+## Manual setup
+
+### Prerequisites
+- Node.js 20+
+- `pi` installed (`npm install -g @mariozechner/pi-coding-agent`)
+
+### Install steps
+
+```bash
+# Clone repo
+git clone https://github.com/VenTheZone/pi-dots.git
+cd pi-dots
+
+# Full install (core + niche + specialist)
+./scripts/install-global-full.sh
+
+# Or core only
+./scripts/install-global.sh
+```
+
+### Run locally (no install)
 
 ```bash
 npm run setup
@@ -87,87 +115,46 @@ cd pi-dotfiles
 pi
 ```
 
-That uses the checked-in project config in `pi-dotfiles/.pi/` and loads:
+---
 
-- `pi-dotfiles`
-- `pi-mcp-access`
-- `pi-agents`
-- `pi-dynamic-model-providers`
-
-## Global install
-
-### Core-only global install
+## Common commands
 
 ```bash
-npm run install-global
+# Check available MCP tools
+pi --eval "/mcp tools"
+
+# See available models
+pi --eval "/provider-models status"
+
+# Login to a provider
+pi --eval "/login openrouter"
+pi --eval "/login kilo-gateway"
+
+# Use a specific model
+pi --model kilo-gateway/minimax/minimax-m2.5:free
 ```
 
-This installs the lean default setup globally, including the dynamic provider extension for OpenRouter, Kilo Gateway, and Cline proxy.
+---
 
-### Full global install
+## Project structure
 
-```bash
-npm run install-global-full
+```
+pi-dots/
+├── pi-dotfiles/                    # Core (12 skills)
+│   ├── skills/                     # Core skills live here
+│   ├── .pi/                        # pi settings
+│   └── docs/CODEMAPS/              # Detailed docs
+├── pi-dotfiles-niche-skills/       # Optional (34 more)
+├── pi-dotfiles-specialist-skills/  # Optional (16 more)
+├── pi-dynamic-model-providers/      # Extra models
+├── pi-mcp-access/                   # MCP bridge
+└── pi-agents/                      # Subagents
 ```
 
-This installs the default setup, both optional skill packs, and the dynamic provider extension.
+---
 
-### Add optional packs manually
+## Links
 
-```bash
-pi install ./pi-dotfiles-niche-skills
-pi install ./pi-dotfiles-specialist-skills
-```
-
-### Provider credentials
-
-Common env vars for the dynamic provider extension:
-
-```bash
-export OPENROUTER_API_KEY=...
-export KILO_API_KEY=...
-export CLINE_PROXY_API_KEY=...
-```
-
-## Validation
-
-Run the root bootstrap check:
-
-```bash
-npm run check
-```
-
-It validates:
-
-- `pi-mcp-access`
-- `pi-agents`
-- `pi-dynamic-model-providers`
-- prompt command discovery from `pi-dotfiles`
-- MCP connectivity for Context7 and JCodeMunch
-- dynamic provider command availability for OpenRouter and Kilo Gateway
-
-## Useful commands inside pi
-
-- `/mcp tools`
-- `/provider-models status`
-- `/provider-models refresh`
-- `/plan <task>`
-- `/implement <task>`
-- `/scout-and-plan <task>`
-- `/implement-and-review <task>`
-
-## Repo layout
-
-- `./pi-dotfiles/`
-- `./pi-dotfiles-niche-skills/`
-- `./pi-dotfiles-specialist-skills/`
-- `./pi-mcp-access/`
-- `./pi-agents/`
-- `./pi-dynamic-model-providers/`
-- `./scripts/`
-- `./examples/`
-
-## Notes
-
-- The repo intentionally ignores `node_modules/`, `dist/`, and repo-root `.pi/` state.
-- The dynamic pruning package is still in the repo, but it is not part of the active default setup.
+- [INSTALL.md](./INSTALL.md) — Full setup guide
+- [pi-dotfiles/docs/CODEMAPS/CODEMAP.md](./pi-dotfiles/docs/CODEMAPS/CODEMAP.md) — Detailed reference
+- [pi.dev](https://pi.dev) — pi documentation
