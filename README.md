@@ -1,21 +1,48 @@
 # pi-dots
 
-Quick setup for pi-coding-agent.
+Quick setup for pi-coding-agent. Copy what you want.
 
 ---
 
-## What to copy
+## Copy specific skills
 
-### Core (12 skills + settings)
+```bash
+mkdir -p ~/.pi/agent/skills
+cp -r pi-dotfiles/skills/<skill-name> ~/.pi/agent/skills/
+```
+
+Available skills in `pi-dotfiles/skills/`:
+- brainstorming
+- coding-standards
+- context7-base-code-review
+- context7-driven-development
+- humanizer
+- iterative-retrieval
+- planning-with-files
+- security-review
+- strategic-compact
+- tdd-workflow
+- verification-loop
+- visual-explainer
+
+Example:
+```bash
+cp -r pi-dotfiles/skills/tdd-workflow ~/.pi/agent/skills/
+cp -r pi-dotfiles/skills/brainstorming ~/.pi/agent/skills/
+```
+
+---
+
+## Copy all core skills
 
 ```bash
 mkdir -p ~/.pi/agent/skills
 cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
-cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
-cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
 
-### Optional: More skills
+---
+
+## Copy extra skills
 
 ```bash
 # 34 niche skills (Docker, Python, Go, etc.)
@@ -25,35 +52,24 @@ cp -r pi-dotfiles-niche-skills/skills/* ~/.pi/agent/skills/
 cp -r pi-dotfiles-specialist-skills/skills/* ~/.pi/agent/skills/
 ```
 
-### Optional: Dynamic model providers
+---
+
+## Copy settings
 
 ```bash
-# For OpenRouter or Kilo Gateway support
-cp examples/dynamic-model-providers.global.example.json ~/.pi/agent/dynamic-model-providers.json
+cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
+cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
 
 ---
 
-## Packages (optional)
-
-If you want packages registered in settings:
+## Model providers (optional)
 
 ```bash
-# Edit ~/.pi/agent/settings.json and add:
-"packages": [
-  "/path/to/pi-dots/pi-dotfiles",
-  "/path/to/pi-dots/pi-mcp-access",
-  "/path/to/pi-dots/pi-agents",
-  "/path/to/pi-dots/pi-dynamic-model-providers"
-]
+cp examples/dynamic-model-providers.global.example.json ~/.pi/agent/dynamic-model-providers.json
 ```
 
-Then run:
-```bash
-pi install ./pi-dotfiles
-pi install ./pi-mcp-access
-# etc
-```
+Edit to add your API key.
 
 ---
 
