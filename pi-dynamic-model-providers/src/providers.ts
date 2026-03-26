@@ -10,6 +10,7 @@ export interface RuntimeProviderModel {
   cost: ModelCost;
   contextWindow: number;
   maxTokens: number;
+  free: boolean;
   headers?: Record<string, string>;
   compat?: Record<string, unknown>;
 }
@@ -213,7 +214,14 @@ async function fetchProviderModels(providerName: string, config: DynamicProvider
     .filter((model): model is RuntimeProviderModel => model !== null)
     .filter((model) => matchesFilters(model.id, config.include, config.exclude));
 
-  parsed.sort((a, b) => a.id.localeCompare(b.id));
+  parsed.sort((a, b) => {
+    // Sort free models first
+    const aFree = a.cost.input === 0 && a.cost.output === 0;
+    const bFree = b.cost.input === 0 && b.cost.output === 0;
+    if (aFree && !bFree) return -1;
+    if (!aFree && bFree) return 1;
+    return a.id.localeCompare(b.id);
+  });
   return typeof config.maxModels === "number" && config.maxModels > 0 ? parsed.slice(0, config.maxModels) : parsed;
 }
 
@@ -240,12 +248,22 @@ function parseModel(raw: unknown, config: DynamicProviderConfig): RuntimeProvide
 
   const override = config.modelOverrides?.[id];
   const cost = applyCostOverride(parseCost(raw, config.assumeFree === true), override?.cost);
+  const isFree = cost.input === 0 && cost.output === 0;
   const reasoning = override?.reasoning ?? inferReasoning(raw, config.defaultReasoning ?? false);
   const input = override?.input ?? (modalities.includes("image") ? (["text", "image"] as const) : (["text"] as const));
   const contextWindow = override?.contextWindow ?? inferContextWindow(raw, config.defaultContextWindow ?? 128000);
   const maxTokens = override?.maxTokens ?? inferMaxTokens(raw, config.defaultMaxTokens ?? 16384);
   const baseName = override?.name ?? inferDisplayName(raw, id);
-  const name = `${baseName} (${formatPriceLabel(cost)})`;
+  
+  // Format context window (e.g., 128000 -> "128K", 200000 -> "200K")
+  const formatContext = (n: number): string => {
+    if (n >= 1_000_000) return `${Math.round(n / 1_000_000)}M`;
+    if (n >= 1000) return `${Math.round(n / 1000)}K`;
+    return n.toString();
+  };
+  
+  const freeLabel = isFree ? "FREE" : formatPriceLabel(cost);
+  const name = `${baseName} (${freeLabel} | ctx:${formatContext(contextWindow)} out:${formatContext(maxTokens)})`;
 
   const model: RuntimeProviderModel = {
     id,
@@ -255,6 +273,7 @@ function parseModel(raw: unknown, config: DynamicProviderConfig): RuntimeProvide
     cost,
     contextWindow,
     maxTokens,
+    free: isFree,
   };
 
   if (override?.headers) model.headers = { ...override.headers };
@@ -349,6 +368,7 @@ function buildStaticModels(config: DynamicProviderConfig): RuntimeProviderModel[
         cost: { ...defaultCost },
         contextWindow: model.contextWindow ?? config.defaultContextWindow ?? 128000,
         maxTokens: model.maxTokens ?? config.defaultMaxTokens ?? 16384,
+        free: true,
       });
     }
   }
@@ -366,6 +386,7 @@ function buildStaticModels(config: DynamicProviderConfig): RuntimeProviderModel[
       cacheWrite: override.cost?.cacheWrite ?? 0,
     };
     
+    const isFree = cost.input === 0 && cost.output === 0;
     models.push({
       id: modelId,
       name,
@@ -374,6 +395,7 @@ function buildStaticModels(config: DynamicProviderConfig): RuntimeProviderModel[
       cost,
       contextWindow: override.contextWindow ?? config.defaultContextWindow ?? 128000,
       maxTokens: override.maxTokens ?? config.defaultMaxTokens ?? 16384,
+      free: isFree,
     });
   }
   

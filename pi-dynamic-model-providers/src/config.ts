@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
 
-export type ProviderKind = "openrouter" | "kilo-gateway" | "openai-compatible";
+export type ProviderKind = "openrouter" | "kilo-gateway" | "openai-compatible" | "cline";
 export type ProviderApi = "openai-completions" | "openai-responses";
 
 export interface ModelCost {
@@ -79,7 +79,7 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
         "HTTP-Referer": "https://github.com/VenTheZone/pi-dots",
         "X-Title": "pi-dots",
       },
-      maxModels: 50,
+      maxModels: 350,
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
@@ -96,10 +96,48 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       api: "openai-completions",
       apiKey: "KILO_API_KEY",
       authHeader: true,
-      maxModels: 200,
+      maxModels: 350,
       defaultContextWindow: 128000,
       defaultMaxTokens: 16384,
       defaultReasoning: false,
+    },
+    cline: {
+      enabled: true,
+      kind: "cline",
+      displayName: "Cline",
+      baseUrl: "https://api.cline.bot/api/v1",
+      modelsUrl: "https://api.cline.bot/api/v1/ai/cline/models",
+      api: "openai-completions",
+      apiKey: "CLINE_API_KEY",
+      authHeader: true,
+      headers: {
+        "HTTP-Referer": "https://cline.bot",
+        "X-Title": "pi-dots",
+      },
+      maxModels: 500,
+      defaultContextWindow: 128000,
+      defaultMaxTokens: 16384,
+      defaultReasoning: false,
+      models: [
+        {
+          id: "minimax/minimax-m2.5",
+          name: "MiniMax M2.5 Free",
+          contextWindow: 1000000,
+          maxTokens: 32768,
+        },
+        {
+          id: "kwaipilot/kat-coder-pro",
+          name: "KAT Coder Pro Free",
+          contextWindow: 32768,
+          maxTokens: 8192,
+        },
+        {
+          id: "z-ai/glm-5",
+          name: "GLM-5 Free",
+          contextWindow: 128000,
+          maxTokens: 16384,
+        },
+      ],
     },
   },
 };
@@ -202,7 +240,7 @@ function mergeModelOverride(base: ModelOverride | undefined, raw: Record<string,
 function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConfig {
   const next: DynamicProviderConfig = {};
   if (typeof raw.enabled === "boolean") next.enabled = raw.enabled;
-  if (raw.kind === "openrouter" || raw.kind === "kilo-gateway" || raw.kind === "openai-compatible") next.kind = raw.kind;
+  if (raw.kind === "openrouter" || raw.kind === "kilo-gateway" || raw.kind === "openai-compatible" || raw.kind === "cline") next.kind = raw.kind;
   if (typeof raw.displayName === "string") next.displayName = raw.displayName;
   if (typeof raw.baseUrl === "string") next.baseUrl = raw.baseUrl;
   if (typeof raw.modelsUrl === "string") next.modelsUrl = raw.modelsUrl;
