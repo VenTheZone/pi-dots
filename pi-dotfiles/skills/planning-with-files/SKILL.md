@@ -1,3 +1,8 @@
+---
+name: planning-with-files
+description: Use persistent markdown files (task_plan.md, findings.md, progress.md) as working memory for complex tasks - like Manus does.
+---
+
 # Planning with Files
 
 Work like Manus: Use persistent markdown files as your "working memory on disk."
