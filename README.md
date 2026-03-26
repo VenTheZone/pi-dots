@@ -49,15 +49,17 @@ Or see [Manual setup](#manual-setup) below.
 ### Niche skills (34 more)
 Stack-specific and workflow skills for Docker, Python, Go, Django, etc.
 
+Installed via the full install script, or manually:
 ```bash
-pi install npm:pi-dotfiles-niche-skills
+pi install ./pi-dotfiles-niche-skills
 ```
 
 ### Specialist skills (16 more)
 Standalone specialist roles as `/skill:specialist-*` commands.
 
+Installed via the full install script, or manually:
 ```bash
-pi install npm:pi-dotfiles-specialist-skills
+pi install ./pi-dotfiles-specialist-skills
 ```
 
 ---
