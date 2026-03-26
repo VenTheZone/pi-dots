@@ -78,3 +78,7 @@ Edit to add your API key.
 ```bash
 pi --eval "/mcp tools"
 ```
+
+## Commands
+
+See `pi-dotfiles/prompts/commands.md` for all available `/` commands.
