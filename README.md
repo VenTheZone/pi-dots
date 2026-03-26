@@ -1,147 +1,64 @@
 # pi-dots
 
-Your pi-coding-agent setup. Keep it simple, expand as needed.
+Quick setup for pi-coding-agent.
 
 ---
 
-## One-line install
+## What to copy
+
+### Core (12 skills + settings)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/VenTheZone/pi-dots/main/scripts/install-global-full.sh | bash
+mkdir -p ~/.pi/agent/skills
+cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
+cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
+cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
 
-Or see [Manual setup](#manual-setup) below.
+### Optional: More skills
 
----
-
-## What's included
-
-| Package | Purpose |
-|---------|---------|
-| `pi-dotfiles` | 12 core skills, prompts, settings |
-| `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway, Qwen OAuth |
-| `pi-mcp-access` | MCP bridge |
-| `pi-agents` | Bundled subagents |
-
----
-
-## Core skills (included)
-
-| Skill | Use it for |
-|-------|------------|
-| `brainstorming` | Planning features/tasks |
-| `coding-standards` | TypeScript, JS, React, Node best practices |
-| `context7-base-code-review` | Looking up docs |
-| `context7-driven-development` | Using docs while coding |
-| `humanizer` | Polishing documentation |
-| `iterative-retrieval` | Progressive context retrieval |
-| `planning-with-files` | File-based task planning (Manus-style) |
-| `security-review` | Auth, secrets, API security |
-| `strategic-compact` | Manual context compaction |
-| `tdd-workflow` | Test-driven development |
-| `verification-loop` | Verifying your work |
-| `visual-explainer` | HTML diagrams and visualizations |
-
----
-
-## Optional add-ons
-
-### Niche skills (34 more)
-Stack-specific and workflow skills for Docker, Python, Go, Django, etc.
-
-Installed via the full install script, or manually:
 ```bash
-pi install ./pi-dotfiles-niche-skills
+# 34 niche skills (Docker, Python, Go, etc.)
+cp -r pi-dotfiles-niche-skills/skills/* ~/.pi/agent/skills/
+
+# 16 specialist roles
+cp -r pi-dotfiles-specialist-skills/skills/* ~/.pi/agent/skills/
 ```
 
-### Specialist skills (16 more)
-Standalone specialist roles as `/skill:specialist-*` commands.
+### Optional: Dynamic model providers
 
-Installed via the full install script, or manually:
 ```bash
-pi install ./pi-dotfiles-specialist-skills
+# For OpenRouter or Kilo Gateway support
+cp examples/dynamic-model-providers.global.example.json ~/.pi/agent/dynamic-model-providers.json
 ```
 
 ---
 
-## Model providers
+## Packages (optional)
 
-| Provider | Cost | Setup |
-|----------|------|-------|
-| Kilo Gateway | Paid | Get API key, then `/login kilo-gateway` |
-| OpenRouter | Paid | Get API key, then `/login openrouter` |
-
----
-
-## Manual setup
-
-### Prerequisites
-- Node.js 20+
-- `pi` installed (`npm install -g @mariozechner/pi-coding-agent`)
-
-### Install steps
+If you want packages registered in settings:
 
 ```bash
-# Clone repo
-git clone https://github.com/VenTheZone/pi-dots.git
-cd pi-dots
-
-# Full install (core + niche + specialist)
-./scripts/install-global-full.sh
-
-# Or core only
-./scripts/install-global.sh
+# Edit ~/.pi/agent/settings.json and add:
+"packages": [
+  "/path/to/pi-dots/pi-dotfiles",
+  "/path/to/pi-dots/pi-mcp-access",
+  "/path/to/pi-dots/pi-agents",
+  "/path/to/pi-dots/pi-dynamic-model-providers"
+]
 ```
 
-### Run locally (no install)
-
+Then run:
 ```bash
-npm run setup
-npm run check
-cd pi-dotfiles
-pi
+pi install ./pi-dotfiles
+pi install ./pi-mcp-access
+# etc
 ```
 
 ---
 
-## Common commands
+## Verify
 
 ```bash
-# Check available MCP tools
 pi --eval "/mcp tools"
-
-# See available models
-pi --eval "/provider-models status"
-
-# Login to a provider
-pi --eval "/login openrouter"
-pi --eval "/login kilo-gateway"
-
-# Use a specific model
-pi --model kilo-gateway/minimax/minimax-m2.5:free
 ```
-
----
-
-## Project structure
-
-```
-pi-dots/
-├── pi-dotfiles/                    # Core (12 skills)
-│   ├── skills/                     # Core skills live here
-│   ├── .pi/                        # pi settings
-│   └── docs/CODEMAPS/              # Detailed docs
-├── pi-dotfiles-niche-skills/       # Optional (34 more)
-├── pi-dotfiles-specialist-skills/  # Optional (16 more)
-├── pi-dynamic-model-providers/      # Extra models
-├── pi-mcp-access/                   # MCP bridge
-└── pi-agents/                      # Subagents
-```
-
----
-
-## Links
-
-- [INSTALL.md](./INSTALL.md) — Full setup guide
-- [pi-dotfiles/docs/CODEMAPS/CODEMAP.md](./pi-dotfiles/docs/CODEMAPS/CODEMAP.md) — Detailed reference
-- [pi.dev](https://pi.dev) — pi documentation
