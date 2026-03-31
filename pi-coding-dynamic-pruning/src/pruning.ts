@@ -94,11 +94,13 @@ export function applyPruning(messages: PrunableMessage[], cwd: string, config: D
   const inputPrunes = new Map<string, "stale" | "superseded" | "error">();
   const reasons = new Set<string>();
 
-  if (config.strategies.deduplication) {
+  if (config.strategies.deduplication.enabled) {
+    const dedupProtected = config.strategies.deduplication.protectedTools;
     const bySignature = new Map<string, ToolRef[]>();
 
     for (const ref of refs) {
       if (ref.protected || !ref.resultMessage || ref.resultMessage.isError) continue;
+      if (matchesAnyGlob(ref.name, dedupProtected)) continue;
       const signature = `${ref.name}::${stableStringify(stripUndefined(ref.args))}`;
       const group = bySignature.get(signature) ?? [];
       group.push(ref);
@@ -140,11 +142,13 @@ export function applyPruning(messages: PrunableMessage[], cwd: string, config: D
   }
 
   if (config.strategies.purgeErrors.enabled) {
+    const purgeProtected = config.strategies.purgeErrors.protectedTools;
     const threshold = Math.max(1, config.strategies.purgeErrors.turns);
     const currentTurn = getCurrentTurn(messages);
 
     for (const ref of refs) {
       if (ref.protected || !ref.resultMessage || !ref.resultMessage.isError) continue;
+      if (matchesAnyGlob(ref.name, purgeProtected)) continue;
       if (currentTurn - ref.turn < threshold) continue;
       inputPrunes.set(ref.id, "error");
       reasons.add("purgeErrors");

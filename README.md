@@ -4,6 +4,17 @@ Quick setup for pi-coding-agent. Copy what you want.
 
 ---
 
+## For LLM Agents
+
+Paste this into any coding agent to install pi-dots:
+
+```
+Install and configure pi-coding-agent extensions and skills by following the instructions here:
+https://raw.githubusercontent.com/badlogic/pi-dots/refs/heads/master/INSTALL.md
+```
+
+---
+
 ## Packages
 
 | Package | Description |
@@ -11,6 +22,7 @@ Quick setup for pi-coding-agent. Copy what you want.
 | `pi-dotfiles` | Core skills, settings, MCP config |
 | `pi-dotfiles-niche-skills` | 33 extra skills (Docker, Python, Go, etc.) |
 | `pi-dotfiles-specialist-skills` | 16 specialist roles |
+| `pi-coding-dynamic-pruning` | Auto-prune stale context, compress old messages |
 | `pi-mcp-access` | MCP bridge |
 | `pi-agents` | Subagents |
 | `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway |
