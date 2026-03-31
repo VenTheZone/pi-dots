@@ -10,7 +10,7 @@ Paste this into any coding agent to install pi-dots:
 
 ```
 Install and configure pi-coding-agent extensions and skills by following the instructions here:
-https://raw.githubusercontent.com/badlogic/pi-dots/refs/heads/master/INSTALL.md
+https://raw.githubusercontent.com/VenTheZone/pi-dots/refs/heads/main/INSTALL.md
 ```
 
 ---
