@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/VenTheZone/pi-dots/refs/heads/main/INSTALL.md
 | Package | Description |
 |---------|-------------|
 | `pi-dotfiles` | Core skills, settings, MCP config |
-| `pi-dotfiles-niche-skills` | 59 total skills (Docker, Python, Go, AI research, content creation, project management, design systems, web utilities, etc.) |
+| `pi-dotfiles-niche-skills` | 60 total skills (Docker, Python, Go, AI research, content creation, project management, design systems, web utilities, etc.) |
 | `pi-dotfiles-specialist-skills` | 16 specialist roles |
 | `pi-agents` | Extended subagents (external-scout, etc.) |
 | `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway, **NVIDIA NIM**, Cline free models |
@@ -46,9 +46,9 @@ https://raw.githubusercontent.com/VenTheZone/pi-dots/refs/heads/main/INSTALL.md
 
 ---
 
-## Niche Skills (59 total)
+## Niche Skills (60 total)
 
-pi-dotfiles-niche-skills now includes **59 skills** (was 33). Skills are organized by category:
+pi-dotfiles-niche-skills now includes **60 skills** (was 33). Skills are organized by category:
 
 ### Infrastructure & Research
 - `agent-introspection-debugging` — Self-healing for failing agents (loops, context overflow)
@@ -82,6 +82,7 @@ pi-dotfiles-niche-skills now includes **59 skills** (was 33). Skills are organiz
 - `improve-codebase-architecture` — AI-powered codebase exploration for refactoring opportunities
 - `request-refactor-plan` — Create refactor plans with tiny commits, GitHub RFC
 - `write-a-skill` — Create new agent skills (meta-skill for extending pi)
+- `decision-commits` — Write commits that capture judgment, not just description (record of decisions)
 
 ### Web Utilities
 - `web-fetch` — Fetch web pages, extract readable text

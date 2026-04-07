@@ -20,13 +20,13 @@ Before installing, explain each package and ask which ones the user wants:
 
 **pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds OpenRouter (350+ models), Kilo Gateway (350+), **NVIDIA NIM** (requires API key), and Cline free models (MiniMax M2.5, KAT Coder Pro, GLM-5). Configure with API keys.
 
-**pi-dotfiles-niche-skills** — **59 skills total** covering:
+**pi-dotfiles-niche-skills** — **60 skills total** covering:
   - Languages: Go, Python, Java, C++
   - Frameworks: Django, Spring Boot
   - DevOps: Docker, deployment patterns
   - Databases: Postgres, ClickHouse, migrations
   - Security: hacker patterns, security scanning
-  - **New**: AI research (deep-research, market-research, exa-search), content creation (brand-voice, content-engine, article-writing, crosspost), parallel orchestration (dmux-workflows), API design, project management (quick-setup, git-workflow, debug-helper, grill-me, improve-codebase-architecture, request-refactor-plan, write-a-skill), design systems (claymorphism, liquid-glass, neubrutalism), web utilities (web-fetch, web-search).
+  - **New**: AI research (deep-research, market-research, exa-search), content creation (brand-voice, content-engine, article-writing, crosspost), parallel orchestration (dmux-workflows), API design, project management (quick-setup, git-workflow, debug-helper, grill-me, improve-codebase-architecture, request-refactor-plan, write-a-skill, decision-commits), design systems (claymorphism, liquid-glass, neubrutalism), web utilities (web-fetch, web-search).
 
 **pi-dotfiles-specialist-skills** — 16 specialist roles (database reviewer, E2E runner, build error resolver, etc.).
 
