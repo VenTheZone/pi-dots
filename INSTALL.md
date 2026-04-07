@@ -14,19 +14,21 @@ Before installing, explain each package and ask which ones the user wants:
 
 ### Packages
 
-**pi-dotfiles** — Core package. 12 skills (TDD, security review, brainstorming, etc.), prompt templates, slash commands, and MCP config. Start here if unsure.
+**pi-dotfiles** — Core package. 12 foundational skills (TDD, security review, brainstorming, etc.), prompt templates, slash commands, and MCP config. Start here if unsure.
 
-**pi-coding-dynamic-pruning** — Keeps context clean automatically. Deduplicates repeated tool calls, prunes stale file edits, and lets the model compress old conversation sections into summaries with `/dcp`. Includes context nudges when the window fills up.
+**pi-agents** — Subagent definitions (planner, worker, reviewer, scout, **external-scout**, etc.) for delegating tasks. Includes workflow prompts like `/implement-and-review` and `/external-scout-and-plan`.
 
-**pi-mcp-access** — MCP bridge extension. Needed if the user wants to connect MCP servers.
+**pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds OpenRouter (350+ models), Kilo Gateway (350+), **NVIDIA NIM** (requires API key), and Cline free models (MiniMax M2.5, KAT Coder Pro, GLM-5). Configure with API keys.
 
-**pi-agents** — Subagent definitions (planner, worker, reviewer, scout, etc.) for delegating tasks.
+**pi-dotfiles-niche-skills** — **49 skills total** covering:
+  - Languages: Go, Python, Java, C++
+  - Frameworks: Django, Spring Boot
+  - DevOps: Docker, deployment patterns
+  - Databases: Postgres, ClickHouse, migrations
+  - Security: hacker patterns, security scanning
+  - **New**: AI research (deep-research, market-research, exa-search), content creation (brand-voice, content-engine, article-writing, crosspost), parallel orchestration (dmux-workflows), API design, and more.
 
-**pi-dynamic-model-providers** — Adds OpenRouter, Kilo Gateway, and other providers beyond the built-in ones.
-
-**pi-dotfiles-niche-skills** — 33 extra skills for specific tech: Docker, Python, Go, Django, Spring Boot, Postgres, security scanning, and more.
-
-**pi-dotfiles-specialist-skills** — 16 specialist roles like database reviewer, E2E runner, build error resolver.
+**pi-dotfiles-specialist-skills** — 16 specialist roles (database reviewer, E2E runner, build error resolver, etc.).
 
 After the user picks, continue with the steps below for each chosen package.
 
@@ -63,10 +65,11 @@ Open `~/.pi/agent/settings.json` and add the packages the user chose to the `pac
 {
   "packages": [
     "/tmp/pi-dots/pi-dotfiles",
-    "/tmp/pi-dots/pi-coding-dynamic-pruning",
-    "/tmp/pi-dots/pi-mcp-access",
     "/tmp/pi-dots/pi-agents",
-    "/tmp/pi-dots/pi-dynamic-model-providers"
+    "/tmp/pi-dots/pi-mcp-access",
+    "/tmp/pi-dots/pi-dynamic-model-providers",
+    "/tmp/pi-dots/pi-dotfiles-niche-skills",
+    "/tmp/pi-dots/pi-dotfiles-specialist-skills"
   ]
 }
 ```
@@ -81,12 +84,11 @@ If the user wants MCP servers:
 cp /tmp/pi-dots/pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 ```
 
-## Step 7: Build extensions
+## Step 7: Build extensions (if needed)
 
-For extensions that need building:
+Some packages require building:
 
 ```bash
-cd /tmp/pi-dots/pi-coding-dynamic-pruning && npm install && npm run build
 cd /tmp/pi-dots/pi-mcp-access && npm install && npm run build
 ```
 
@@ -96,4 +98,8 @@ cd /tmp/pi-dots/pi-mcp-access && npm install && npm run build
 pi --eval "/mcp tools"
 ```
 
-Start pi and check the footer for extension status. For dynamic pruning, run `/dcp status` to confirm it loaded.
+Start pi and check the footer for extension status. Test external scout:
+
+```
+/external-scout-and-plan Implement a simple Express rate limiter
+```
