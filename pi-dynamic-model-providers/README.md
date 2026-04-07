@@ -11,6 +11,7 @@ Fetches model catalogs from live endpoints, caches results locally, and register
 | `openrouter` | [openrouter.ai/api/v1/models](https://openrouter.ai/api/v1/models) | All OpenRouter models (350+) |
 | `kilo-gateway` | [api.kilo.ai/api/gateway/models](https://api.kilo.ai/api/gateway/models) | All Kilo Gateway models (350+) |
 | `cline` | [api.cline.bot/api/v1/ai/cline/models](https://api.cline.bot/api/v1/ai/cline/models) | All Cline models (500+) + 3 static free models |
+| `nvidia-nim` | [api.nvidia.com/v1/models](https://api.nvidia.com/v1/models) | All NVIDIA NIM models (e.g., Llama, Nemotron, Nemo) |
 
 ### Cline free models
 
@@ -21,6 +22,35 @@ Cline documents three free models ([docs.cline.bot/api/models](https://docs.clin
 - `z-ai/glm-5` — GLM-5 Free (128K context)
 
 These are registered as static models so they're always available, even if the model list fetch fails.
+
+## Provider Details
+
+### NVIDIA NIM
+
+- **Enabled by default**: `false` (explicit opt-in)
+- **Endpoint**: `https://api.nvidia.com/v1`
+- **Models endpoint**: `https://api.nvidia.com/v1/models`
+- **Auth**: Bearer token (`NVIDIA_API_KEY`)
+- **Pricing**: The NIM models endpoint does not return pricing information. Costs will appear as unknown (`$?/$?`). To display pricing, add `modelOverrides` with cost information in your config:
+
+```json
+{
+  "providers": {
+    "nvidia-nim": {
+      "enabled": true,
+      "modelOverrides": {
+        "meta/llama-3-70b-instruct": {
+          "cost": { "input": 0.35, "output": 0.50 }
+        }
+      }
+    }
+  }
+}
+```
+- **Context windows**: Determined from `max_model_len` field with fallback to `defaultContextWindow` (128K).
+- **Max output**: Determined from `max_output_tokens` or `max_tokens` with fallback to `defaultMaxTokens` (4096).
+
+Get your NVIDIA API key from https://api.nvidia.com.
 
 ## Model display
 
@@ -45,7 +75,7 @@ Context is abbreviated: `128K`, `1M`, etc.
 | `.pi/dynamic-model-providers.json` | Project-level overrides |
 | `~/.pi/agent/dynamic-model-providers.json` | Global config |
 
-Project config overrides global config. Both are optional — built-in defaults cover all three providers.
+Project config overrides global config. Both are optional — built-in defaults cover all providers.
 
 ## API keys
 
@@ -55,6 +85,7 @@ Set these environment variables for each provider:
 export OPENROUTER_API_KEY="your-openrouter-key"
 export KILO_API_KEY="your-kilo-key"
 export CLINE_API_KEY="your-cline-key"
+export NVIDIA_API_KEY="your-nvidia-key"
 ```
 
 Or configure in the global config file:
@@ -64,7 +95,8 @@ Or configure in the global config file:
   "providers": {
     "openrouter": { "apiKey": "OPENROUTER_API_KEY" },
     "kilo-gateway": { "apiKey": "KILO_API_KEY" },
-    "cline": { "apiKey": "CLINE_API_KEY" }
+    "cline": { "apiKey": "CLINE_API_KEY" },
+    "nvidia-nim": { "apiKey": "NVIDIA_API_KEY" }
   }
 }
 ```

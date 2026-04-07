@@ -305,6 +305,7 @@ function inferReasoning(raw: Record<string, unknown>, fallback: boolean): boolea
 
 function inferContextWindow(raw: Record<string, unknown>, fallback: number): number {
   if (typeof raw.context_length === "number") return raw.context_length;
+  if (typeof raw.max_model_len === "number") return raw.max_model_len; // NVIDIA NIM
   if (isRecord(raw.top_provider) && typeof raw.top_provider.context_length === "number") return raw.top_provider.context_length;
   return fallback;
 }
@@ -312,6 +313,8 @@ function inferContextWindow(raw: Record<string, unknown>, fallback: number): num
 function inferMaxTokens(raw: Record<string, unknown>, fallback: number): number {
   if (isRecord(raw.top_provider) && typeof raw.top_provider.max_completion_tokens === "number") return raw.top_provider.max_completion_tokens;
   if (typeof raw.maxTokens === "number") return raw.maxTokens;
+  if (typeof raw.max_output_tokens === "number") return raw.max_output_tokens; // NVIDIA NIM
+  if (typeof raw.max_tokens === "number") return raw.max_tokens; // OpenAI-style
   return fallback;
 }
 

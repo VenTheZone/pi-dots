@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
 
-export type ProviderKind = "openrouter" | "kilo-gateway" | "openai-compatible" | "cline";
+export type ProviderKind = "openrouter" | "kilo-gateway" | "openai-compatible" | "cline" | "nvidia-nim";
 export type ProviderApi = "openai-completions" | "openai-responses";
 
 export interface ModelCost {
@@ -139,6 +139,24 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
         },
       ],
     },
+    "nvidia-nim": {
+      enabled: false,
+      kind: "nvidia-nim",
+      displayName: "NVIDIA NIM",
+      baseUrl: "https://api.nvidia.com/v1",
+      modelsUrl: "https://api.nvidia.com/v1/models",
+      api: "openai-completions",
+      apiKey: "NVIDIA_API_KEY",
+      authHeader: true,
+      headers: {
+        "Accept": "application/json",
+      },
+      maxModels: 100,
+      defaultContextWindow: 128000,
+      defaultMaxTokens: 4096,
+      defaultReasoning: false,
+      assumeFree: false,
+    },
   },
 };
 
@@ -240,7 +258,7 @@ function mergeModelOverride(base: ModelOverride | undefined, raw: Record<string,
 function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConfig {
   const next: DynamicProviderConfig = {};
   if (typeof raw.enabled === "boolean") next.enabled = raw.enabled;
-  if (raw.kind === "openrouter" || raw.kind === "kilo-gateway" || raw.kind === "openai-compatible" || raw.kind === "cline") next.kind = raw.kind;
+  if (raw.kind === "openrouter" || raw.kind === "kilo-gateway" || raw.kind === "openai-compatible" || raw.kind === "cline" || raw.kind === "nvidia-nim") next.kind = raw.kind;
   if (typeof raw.displayName === "string") next.displayName = raw.displayName;
   if (typeof raw.baseUrl === "string") next.baseUrl = raw.baseUrl;
   if (typeof raw.modelsUrl === "string") next.modelsUrl = raw.modelsUrl;
