@@ -1,6 +1,10 @@
 # pi-dots
 
-Quick setup for pi-coding-agent. Copy what you want.
+**All the skills you'll need for AI-powered development with pi-coding-agent.**
+
+pi-dots is a comprehensive collection of 60+ skills, agents, and workflows that transform pi into a complete AI development platform. From project setup to research, implementation, testing, debugging, deployment, and even content creation — it's all here.
+
+Quick start: copy what you want.
 
 ---
 
