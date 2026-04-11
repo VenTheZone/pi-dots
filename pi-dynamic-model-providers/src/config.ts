@@ -48,6 +48,8 @@ export interface DynamicProviderConfig {
   defaultContextWindow?: number;
   defaultMaxTokens?: number;
   defaultReasoning?: boolean;
+  /** Rate limit for API requests (requests per minute). Used to throttle model fetching. */
+  requestsPerMinute?: number;
   include?: string[];
   exclude?: string[];
   modelOverrides?: Record<string, ModelOverride>;
@@ -140,22 +142,49 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       ],
     },
     "nvidia-nim": {
-      enabled: false,
+      enabled: true,
       kind: "nvidia-nim",
       displayName: "NVIDIA NIM",
-      baseUrl: "https://api.nvidia.com/v1",
-      modelsUrl: "https://api.nvidia.com/v1/models",
+      baseUrl: "https://integrate.api.nvidia.com/v1",
+      modelsUrl: "https://integrate.api.nvidia.com/v1/models",
       api: "openai-completions",
       apiKey: "NVIDIA_API_KEY",
       authHeader: true,
       headers: {
         "Accept": "application/json",
       },
-      maxModels: 100,
+      maxModels: 500,
+      // NVIDIA NIM free tier has 40 RPM limit for model listing
+      requestsPerMinute: 40,
+      assumeFree: true,
       defaultContextWindow: 128000,
-      defaultMaxTokens: 4096,
+      defaultMaxTokens: 16384,
       defaultReasoning: false,
-      assumeFree: false,
+      modelOverrides: {
+        // DeepSeek V3.2 has 128k+ context (API reports limited info, override for accuracy)
+        "deepseek-ai/deepseek-v3.2": {
+          name: "DeepSeek V3.2",
+          contextWindow: 128000,
+          maxTokens: 32768,
+        },
+        // Kimi-K2.5 has 256k context window
+        "moonshotai/kimi-k2.5": {
+          name: "Kimi K2.5",
+          contextWindow: 256000,
+          maxTokens: 32768,
+        },
+        // Kimi-K2 also has extended context
+        "moonshotai/kimi-k2": {
+          name: "Kimi K2",
+          contextWindow: 256000,
+          maxTokens: 32768,
+        },
+        "moonshotai/kimi-k2-instruct": {
+          name: "Kimi K2 Instruct",
+          contextWindow: 256000,
+          maxTokens: 32768,
+        },
+      },
     },
   },
 };
@@ -265,6 +294,7 @@ function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConf
   if (raw.api === "openai-completions" || raw.api === "openai-responses") next.api = raw.api;
   if (typeof raw.apiKey === "string") next.apiKey = raw.apiKey;
   if (typeof raw.authHeader === "boolean") next.authHeader = raw.authHeader;
+  if (typeof raw.requestsPerMinute === "number") next.requestsPerMinute = raw.requestsPerMinute;
   if (typeof raw.ttlHours === "number") next.ttlHours = raw.ttlHours;
   if (typeof raw.maxModels === "number") next.maxModels = raw.maxModels;
   if (typeof raw.assumeFree === "boolean") next.assumeFree = raw.assumeFree;
