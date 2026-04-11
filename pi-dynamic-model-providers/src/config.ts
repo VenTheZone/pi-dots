@@ -161,9 +161,9 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultMaxTokens: 16384,
       defaultReasoning: false,
       modelOverrides: {
-        // DeepSeek V3.2 has 128k+ context (API reports limited info, override for accuracy)
+        // DeepSeek V3.2 on NIM is NVFP4-quantized (nvidia/DeepSeek-V3.2-NVFP4), not the full FP8 model
         "deepseek-ai/deepseek-v3.2": {
-          name: "DeepSeek V3.2",
+          name: "DeepSeek V3.2 (NVFP4)",
           contextWindow: 128000,
           maxTokens: 32768,
         },
