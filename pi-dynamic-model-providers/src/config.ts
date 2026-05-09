@@ -87,6 +87,10 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
       defaultReasoning: false,
       modelOverrides: {
         "openrouter/free": { name: "OpenRouter Auto-Router" },
+      // MiniMax M2.7 has 205k context window (not 197k from API)
+      "minimax/minimax-m2.7": { contextWindow: 205000 },
+      // Kimi K2.5 has 256k context window (not 262k from API)
+      "moonshotai/kimi-k2.5": { contextWindow: 256000 },
       },
     },
     "kilo-gateway": {
