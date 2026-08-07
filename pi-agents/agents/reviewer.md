@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Code review specialist for quality, correctness, and security analysis.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash
 ---
 

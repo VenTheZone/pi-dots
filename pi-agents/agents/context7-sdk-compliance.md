@@ -1,7 +1,7 @@
 ---
 name: context7-sdk-compliance
 description: Validate SDK usage against official Context7 documentation.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash, context7_query-docs, context7_resolve-library-id
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: go-reviewer
 description: Expert Go code reviewer for idiomatic Go, concurrency, error handling, and performance.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash
 ---
 

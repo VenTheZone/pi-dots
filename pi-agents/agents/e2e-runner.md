@@ -1,7 +1,7 @@
 ---
 name: e2e-runner
 description: End-to-end testing specialist using Playwright and related tooling.
-model: gpt-5.3-codex-spark
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

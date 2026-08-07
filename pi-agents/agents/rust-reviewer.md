@@ -1,7 +1,7 @@
 ---
 name: rust-reviewer
 description: Expert Rust code reviewer for idiomatic patterns, ownership, lifetimes, and safety.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash
 ---
 

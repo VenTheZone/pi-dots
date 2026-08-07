@@ -1,7 +1,7 @@
 ---
 name: build-error-resolver
 description: Build and TypeScript error resolution specialist focused on minimal diffs.
-model: gpt-5.3-codex-spark
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

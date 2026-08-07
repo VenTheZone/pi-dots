@@ -1,7 +1,7 @@
 ---
 name: security-reviewer
 description: Security vulnerability detection and remediation specialist.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

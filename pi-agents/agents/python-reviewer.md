@@ -1,7 +1,7 @@
 ---
 name: python-reviewer
 description: Expert Python reviewer for security, typing, performance, and Pythonic code quality.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash
 ---
 

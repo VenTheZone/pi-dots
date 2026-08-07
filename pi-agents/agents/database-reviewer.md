@@ -1,7 +1,7 @@
 ---
 name: database-reviewer
 description: PostgreSQL and database specialist for schema design, query quality, security, and performance.
-model: gpt-5.4
+model: kilo-gateway/xiaomi/mimo-v2-pro:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: tdd-guide
 description: Test-driven development specialist enforcing write-tests-first workflows.
-model: gpt-5.4
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: refactor-cleaner
 description: Dead code cleanup and consolidation specialist.
-model: gpt-5.4
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

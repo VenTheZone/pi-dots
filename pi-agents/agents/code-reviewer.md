@@ -1,7 +1,7 @@
 ---
 name: code-reviewer
 description: Expert code review specialist for quality, security, and maintainability.
-model: gpt-5.4
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash
 ---
 

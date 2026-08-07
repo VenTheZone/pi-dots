@@ -1,7 +1,7 @@
 ---
 name: planner
 description: Expert planning specialist for implementation planning, architecture changes, and refactors.
-model: gpt-5.4
+model: openrouter/stepfun/step-3.5-flash:free
 tools: read, grep, find, ls, bash
 ---
 

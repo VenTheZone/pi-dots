@@ -1,7 +1,7 @@
 ---
 name: worker
 description: General-purpose subagent with full coding capabilities in an isolated context.
-model: gpt-5.4
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

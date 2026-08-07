@@ -1,7 +1,7 @@
 ---
 name: scout
 description: Fast codebase recon that returns compressed context for handoff to other agents.
-model: gpt-5.3-codex-spark
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash
 ---
 

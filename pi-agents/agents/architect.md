@@ -1,7 +1,7 @@
 ---
 name: architect
 description: Software architecture specialist for system design, scalability, and technical decision-making.
-model: gpt-5.4
+model: openrouter/nvidia/nemotron-3-super-120b:free
 tools: read, grep, find, ls, bash
 ---
 

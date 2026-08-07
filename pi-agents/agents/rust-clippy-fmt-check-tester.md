@@ -1,7 +1,7 @@
 ---
 name: rust-clippy-fmt-check-tester
 description: Rust build, clippy, fmt, and test error resolution specialist.
-model: gpt-5.3-codex-spark
+model: kilo-gateway/minimax/minimax-m2.5:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 
