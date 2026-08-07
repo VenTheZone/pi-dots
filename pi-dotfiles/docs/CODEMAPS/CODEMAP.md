@@ -91,20 +91,22 @@
 ## Install
 
 ```bash
-mkdir -p ~/.pi/agent/skills
-cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
-cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
-cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
+pi install ./pi-dotfiles -l
+pi install ./pi-agents -l
+pi install ./pi-mcp-access -l
+pi install ./pi-dynamic-model-providers -l
 ```
 
----
+Or from the repo root: `npm run install-global`.
 
 ## Model Providers
 
 | Provider | Cost | Auth |
 |----------|------|------|
-| OpenRouter | Paid | API Key |
-| Kilo Gateway | Paid | API Key |
+| Cline | Free + paid | OAuth or `CLINE_API_KEY` |
+| Custom endpoints | Varies | `/add-model` wizard |
+
+Claude and other provider types are configured in `~/.pi/agent/models.json`.
 
 ---
 

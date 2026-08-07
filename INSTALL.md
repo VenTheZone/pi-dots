@@ -18,7 +18,7 @@ Before installing, explain each package and ask which ones the user wants:
 
 **pi-agents** — Subagent definitions (planner, worker, reviewer, scout, **external-scout**, etc.) for delegating tasks. Includes workflow prompts like `/implement-and-review` and `/external-scout-and-plan`.
 
-**pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds OpenRouter (350+ models), Kilo Gateway (350+), **NVIDIA NIM** (requires API key), and Cline free models (MiniMax M2.5, KAT Coder Pro, GLM-5). Configure with API keys.
+**pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds Cline models (free + paid) and a `/add-model` wizard for registering arbitrary OpenAI-compatible endpoints (auto-detects `/models` catalogs). Define and refresh sources under `~/.pi/agent/dynamic-model-providers.json`.
 
 **pi-dotfiles-niche-skills** — **60 skills total** covering:
   - Languages: Go, Python, Java, C++
@@ -49,8 +49,10 @@ After the user picks, continue with the steps below for each chosen package or s
 ## Step 3: Install pi
 
 ```bash
-npm install -g @mariozechner/pi-coding-agent
+curl -fsSL https://pi.dev/install.sh | sh
 ```
+
+Verify with `pi --version`.
 
 ## Step 4: Copy skills
 
@@ -142,13 +144,13 @@ cp /tmp/pi-dots/pi-dotfiles/.pi/mcp.json ~/.pi/agent/
 
 ## Step 7: Build extensions (if needed)
 
-Some packages require building before use. If the user selected any of these, run:
+Packages that ship TypeScript extensions (`pi-mcp-access`, `pi-dynamic-model-providers`) need their dependencies present before pi loads them. If pi reports a missing module, run:
 
 ```bash
-cd /tmp/pi-dots/pi-mcp-access && npm install && npm run build
+cd /tmp/pi-dots/<pkg> && npm install
 ```
 
-Only `pi-mcp-access` currently needs building. The other packages are pure skills/config.
+Extensions are executed from `src/` at runtime, so a build step is only needed if a package's `package.json` expects a `dist/` output.
 
 ## Step 8: Verify
 

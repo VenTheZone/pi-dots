@@ -18,7 +18,7 @@ The intent is:
 ## What is in this package
 
 - `prompts/` — converted command templates
-- `skills/` — 10 core skills for general coding workflows
+- `skills/` — 13 core skills for general coding workflows
 - `AGENTS.md` — project guidance adapted for pi
 - `docs/` — supporting reference docs
 - `package.json` — pi package manifest
@@ -31,7 +31,10 @@ The intent is:
 - `coding-standards`
 - `context7-base-code-review`
 - `context7-driven-development`
+- `decision-commits`
+- `humanizer`
 - `iterative-retrieval`
+- `planning-with-files`
 - `security-review`
 - `strategic-compact`
 - `tdd-workflow`
@@ -44,7 +47,7 @@ The intent is:
 - `../pi-dotfiles-specialist-skills` — old standalone specialist-role skills
 - `../pi-mcp-access` — MCP bridge for pi
 - `../pi-agents` — subagent support and bundled agents
-- `../pi-dynamic-model-providers` — dynamic provider registration for OpenRouter, Kilo Gateway, and Cline proxy
+- `../pi-dynamic-model-providers` — dynamic provider registration for Cline and custom endpoints
 
 ## MCP and agents
 
@@ -62,15 +65,12 @@ The repo-local MCP config enables:
 
 The repo-local dynamic provider config enables:
 
-- OpenRouter
-- Kilo Gateway
-- Cline proxy support is included but disabled by default until configured
+- Cline (via `CLINE` OAuth or `CLINE_API_KEY`)
+- custom OpenAI-compatible endpoints added with `/add-model`
 
 Common env vars:
 
-- `OPENROUTER_API_KEY`
-- `KILO_API_KEY`
-- `CLINE_PROXY_API_KEY`
+- `CLINE_API_KEY`
 
 Bundled subagent workflows from `pi-agents` include:
 

@@ -5,7 +5,7 @@ This project is a pi-coding-agent compatible fork of `favorite-opencode-setup`.
 ## What was ported
 
 - `prompts/*.md` converted from command templates
-- a curated set of 10 core `skills/*` retained in the default package
+- a curated set of 13 core `skills/*` retained in the default package
 - `docs/` reference material
 
 Most stack- and task-specific skills were moved into the optional `pi-dotfiles-niche-skills` package, and standalone specialist-role skills were moved into the optional `pi-dotfiles-specialist-skills` package to keep the default package smaller.
@@ -27,7 +27,8 @@ Most stack- and task-specific skills were moved into the optional `pi-dotfiles-n
 - MCP access is provided locally via the `pi-mcp-access` extension package in this repo
 - The local MCP config enables Context7 and JCodeMunch
 - Dynamic provider access is provided locally via the `pi-dynamic-model-providers` package in this repo
-- The local dynamic provider config enables OpenRouter and Kilo Gateway, with Cline proxy support available when configured
+- The local dynamic provider config provides Cline models and the `/add-model` wizard for custom endpoints
+- Claude (`anthropic-messages`) and other provider types that the dynamic extension does not cover are configured in `~/.pi/agent/models.json`
 - Subagent support is provided locally via the `pi-agents` package in this repo
 - Bundled subagents include roles like `planner`, `architect`, `worker`, `reviewer`, and `code-reviewer`
 - If an MCP server is unavailable, use the non-MCP fallback steps documented in the relevant skill or prompt

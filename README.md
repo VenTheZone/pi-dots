@@ -26,12 +26,12 @@ https://raw.githubusercontent.com/VenTheZone/pi-dots/refs/heads/main/INSTALL.md
 | `pi-dotfiles` | Core skills, settings, MCP config |
 | `pi-dotfiles-niche-skills` | 60 total skills (Docker, Python, Go, AI research, content creation, project management, design systems, web utilities, etc.) |
 | `pi-dotfiles-specialist-skills` | 16 specialist roles |
-| `pi-agents` | Extended subagents (external-scout, etc.) |
-| `pi-dynamic-model-providers` | OpenRouter, Kilo Gateway, **NVIDIA NIM**, Cline free models |
+| `pi-agents` | 20 subagents (planner, worker, reviewer, external-scout, etc.) |
+| `pi-dynamic-model-providers` | Dynamic model catalogs + `/add-model` wizard for custom OpenAI-compatible endpoints |
 
 ---
 
-## Core Skills (12)
+## Core Skills (13)
 
 | Skill | Use for |
 |-------|---------|
@@ -39,6 +39,7 @@ https://raw.githubusercontent.com/VenTheZone/pi-dots/refs/heads/main/INSTALL.md
 | coding-standards | TypeScript/JS/React best practices |
 | context7-base-code-review | Look up docs |
 | context7-driven-development | Use docs while coding |
+| decision-commits | Commits that capture judgment, not just change descriptions |
 | humanizer | Polish documentation |
 | iterative-retrieval | Progressive context |
 | planning-with-files | File-based task planning |
@@ -84,9 +85,8 @@ pi-dotfiles-niche-skills now includes **60 skills** (was 33). Skills are organiz
 - `debug-helper` — Systematic error analysis, log interpretation, profiling
 - `grill-me` — Stress-test plans with relentless interview
 - `improve-codebase-architecture` — AI-powered codebase exploration for refactoring opportunities
-- `request-refactor-plan` — Create refactor plans with tiny commits, GitHub RFC
+- `request-refactor-plan` — Create refactor plans with tight commits, GitHub RFC
 - `write-a-skill` — Create new agent skills (meta-skill for extending pi)
-- `decision-commits` — Write commits that capture judgment, not just description (record of decisions)
 
 ### Web Utilities
 - `web-fetch` — Fetch web pages, extract readable text
@@ -112,36 +112,43 @@ Requires: `exa-search` skill + `exa-mcp-server` configured.
 
 ### Dynamic Model Providers
 
-Adds support for multiple model providers beyond the built-in ones:
-- **OpenRouter** — 350+ models
-- **Kilo Gateway** — 350+ models
-- **NVIDIA NIM** — Llama, Nemotron, Nemo (requires `NVIDIA_API_KEY`)
-- **Cline** — 500+ models + 3 free models (MiniMax M2.5, KAT Coder Pro, GLM-5)
+Adds support for model providers beyond the built-ins, fetched live and cached:
+- **Cline** — 500+ models + 3 static free models (MiniMax M2.5, KAT Coder Pro, GLM-5)
+- **Any custom endpoint** — add one interactively with `/add-model` (auto-detects a `/models` catalog or falls back to manual entry)
 
-Use `/provider-models list` to see all available models.
+Manage with `/provider-models status`, `/provider-models refresh`, and `/provider-models list`.
+
+For Claude (`anthropic-messages`) or other providers that the dynamic extension does not cover,
+add them directly to `~/.pi/agent/models.json` — see `models.md` in the pi docs for the schema.
 
 ---
 
 ## Install
 
-```bash
-mkdir -p ~/.pi/agent/skills
-cp -r pi-dotfiles/skills/* ~/.pi/agent/skills/
-cp pi-dotfiles/.pi/settings.json ~/.pi/agent/
-cp pi-dotfiles/.pi/mcp.json ~/.pi/agent/
-```
-
-Or copy specific skills:
+Install individual packages with pi's package manager:
 
 ```bash
-cp -r pi-dotfiles/skills/tdd-workflow ~/.pi/agent/skills/
+pi install ./pi-dotfiles -l
+pi install ./pi-agents -l
+pi install ./pi-mcp-access -l
+pi install ./pi-dynamic-model-providers -l
+# optional
+pi install ./pi-dotfiles-niche-skills -l
+pi install ./pi-dotfiles-specialist-skills -l
 ```
 
+Or install everything from the repo root:
+
+```bash
+npm run install-global
+```
+
+Get detailed agent-step-by-step setup in [INSTALL.md](INSTALL.md).
 ---
 
 ## Commands
 
-See `pi-dotfiles/prompts/commands.md` for all `/` commands (26 total).
+See `pi-dotfiles/prompts/commands.md` for all `/` commands.
 
 ---
 

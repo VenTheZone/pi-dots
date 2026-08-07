@@ -41,7 +41,7 @@ Bundled workflow prompts:
 
 This repo's `pi-dotfiles/.pi/settings.json` already loads `pi-agents` automatically when you run `pi` from `pi-dotfiles/`.
 
-In the default repo setup, `pi-agents` is paired with the companion `pi-dynamic-model-providers` extension so the same environment also gets dynamic OpenRouter, Kilo Gateway, and optional Cline proxy model registration.
+In the default repo setup, `pi-agents` is paired with the companion `pi-dynamic-model-providers` extension so the same environment also gets dynamic Cline model registration and the `/add-model` wizard for custom endpoints.
 
 For setup from the repo root:
 
