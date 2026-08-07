@@ -11,18 +11,26 @@ This skill integrates Context7's code-aware search to provide accurate documenta
 
 Context7 (context7.com) provides fresh, code-grounded documentation for libraries and frameworks. Use this skill to fetch accurate API references during code reviews.
 
-## Core Integration
+## Tool Priority Order
 
-### When to Use
+1. **Local Files** → `read`/`grep`/`find` if code is on disk
+2. **Exa Search** → `exa_web_search_exa` for error messages, alternatives, general web queries
+3. **Context7** → `context7_query-docs` for authoritative API documentation
+4. **jcodemunch** → `jcodemunch_find_references` for cross-reference analysis
+
+## When to Use
 
 - Reviewing code that uses unfamiliar libraries
 - Answering questions about library APIs
 - Verifying correct usage of frameworks
 - Checking updated documentation for breaking changes
 
-### How It Works
+## How It Works
 
-**Step 1: Resolve Library ID**
+**Step 1: Check Local First**
+Is the code on disk? Use `read`/`grep`/`find` for fastest results.
+
+**Step 2: Resolve Library ID**
 Before querying docs, resolve the library name to a Context7-compatible ID:
 
 ```
@@ -30,7 +38,7 @@ Context7 library: /mongodb/docs
 Context7 library: /vercel/next.js/v14.3.0-canary.87
 ```
 
-**Step 2: Query Documentation**
+**Step 3: Query Documentation**
 Ask specific questions about the library:
 
 ```typescript
@@ -54,14 +62,17 @@ Context7 covers major libraries including:
 ## Code Review Flow
 
 1. Identify unfamiliar libraries in code
-2. If Context7 tools are available in your harness, use `context7_resolve-library-id` to find the library
-3. If Context7 tools are available, use `context7_query-docs` to get specific answers
-4. Otherwise, use the project's web-search or documentation workflow to fetch the same information manually
-5. Apply findings to code review
+2. If code is on disk → use `read`/`grep`/`find` first
+3. If not local → use `exa_web_search_exa` to find docs/examples
+4. For authoritative API docs → use `context7_resolve-library-id` then `context7_query-docs`
+5. For usage patterns in your codebase → use `jcodemunch_find_references`
+6. Apply findings to code review
 
 ## Best Practices
 
+- Check local files before hitting APIs
 - Be specific in queries - ask "how to" questions
 - Include version if known for exact docs
 - Use library ID format: `/org/project` or `/org/project/version`
 - Check for breaking changes in major version upgrades
+- Use Exa for discovering new libraries or troubleshooting errors
