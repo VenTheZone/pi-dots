@@ -1,5 +1,11 @@
 {
   "servers": {
+    "exa": {
+      "transport": "streamable-http",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true,
+      "toolPrefix": "exa_"
+    },
     "context7": {
       "transport": "streamable-http",
       "url": "https://mcp.context7.com/mcp",
@@ -11,7 +17,8 @@
       "command": "uvx",
       "args": ["jcodemunch-mcp"],
       "enabled": true,
-      "toolPrefix": "jcodemunch_"
+      "toolPrefix": "jcodemunch_",
+      "timeout": 300000
     }
   }
 }
