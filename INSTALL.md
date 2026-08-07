@@ -18,7 +18,7 @@ Before installing, explain each package and ask which ones the user wants:
 
 **pi-agents** — Subagent definitions (planner, worker, reviewer, scout, **external-scout**, etc.) for delegating tasks. Includes workflow prompts like `/implement-and-review` and `/external-scout-and-plan`.
 
-**pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds Cline models (free + paid) and a `/add-model` wizard for registering arbitrary OpenAI-compatible endpoints (auto-detects `/models` catalogs). Define and refresh sources under `~/.pi/agent/dynamic-model-providers.json`.
+**pi-dynamic-model-providers** — Dynamic model catalog fetcher. Adds free-tier provider catalogs (Kilo Gateway, Cline) plus private-gateway entries (AgentRouter), and a `/add-model` wizard for registering arbitrary OpenAI-compatible endpoints (auto-detects `/models` catalogs). Define and refresh sources under `~/.pi/agent/dynamic-model-providers.json`.
 
 **pi-dotfiles-niche-skills** — **60 skills total** covering:
   - Languages: Go, Python, Java, C++

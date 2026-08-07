@@ -10,6 +10,7 @@ Fetches model catalogs from live endpoints, caches results locally, and register
 |----------|--------|--------|
 | `cline` | [api.cline.bot/api/v1/ai/cline/models](https://api.cline.bot/api/v1/ai/cline/models) | All Cline models (500+) + 3 static free models |
 | `kilo-gateway` | [api.kilo.ai/api/gateway](https://api.kilo.ai/api/gateway) | Free models via Kilo's gateway (`kilo-auto/free` + `*:free` tier) |
+| `agentrouter` / `agentrouter-openai` | [agentrouter.org](https://agentrouter.org) | Claude (Opus 4.8, Opus 5) + GPT-5.6 Sol (paid gateway) |
 
 ### Cline free models
 
@@ -21,6 +22,8 @@ Cline documents three free models ([docs.cline.bot/api/models](https://docs.clin
 
 These are registered as static models so they're always available, even if the model list fetch fails.
 
+> Note: last live test returned `402 insufficient_credits` (account balance −$0.01) for all three — they only work once the Cline account has credits.
+
 ### Kilo Gateway
 
 `kilo-gateway` points pi at `https://api.kilo.ai/api/gateway` and exposes only the free tier:
@@ -29,6 +32,15 @@ These are registered as static models so they're always available, even if the m
 - every `:free` model served by the gateway (DeepSeek, Nemotron, Llama, Poolside, Qwen, etc.)
 
 Auth is an OAuth bearer token. The config reads it from `~/.pi/agent/auth.json` under the `kilo-gateway` key at runtime, so no key is committed to the repo. To store a key instead, set the `KILO_API_KEY` environment variable.
+
+### AgentRouter
+
+Two entries for the private gateway at `agentrouter.org`:
+
+- `agentrouter` — Claude (`anthropic-messages`, base `https://agentrouter.org`): `claude-opus-4-8`, `claude-opus-5`
+- `agentrouter-openai` — OpenAI (`openai-completions`, base `https://agentrouter.org/v1`): `gpt-5.6-sol`
+
+Keys are resolved at runtime: `AGENTROUTER_API_KEY` env first, falling back to the cached key in `~/.pi/agent/models.json` — no secret committed. The gateway currently rejects the stored key (`401 unauthorized client detected`); supply a valid one via env to use these.
 
 ## Model display
 
@@ -61,6 +73,7 @@ Set the environment variable for the provider:
 
 ```bash
 export CLINE_API_KEY="your-cline-key"
+export AGENTROUTER_API_KEY="your-agentrouter-key"
 ```
 
 Or configure in the global config file:

@@ -113,13 +113,14 @@ Requires: `exa-search` skill + `exa-mcp-server` configured.
 ### Dynamic Model Providers
 
 Adds support for model providers beyond the built-ins, fetched live and cached:
-- **Cline** — 500+ models + 3 static free models (MiniMax M2.5, KAT Coder Pro, GLM-5)
+- **Kilo Gateway** — free tier via `api.kilo.ai` (`kilo-auto/free` + every `*:free` model: Tencent Hy3, NVIDIA Nemotron, StepFun, Poolside, Cohere, etc.)
+- **Cline** — 500+ models + 3 static free models (MiniMax M2.5, KAT Coder Pro, GLM-5; currently `402` — account needs credits)
+- **AgentRouter** — Claude (`claude-opus-4-8/5`) + GPT-5.6 Sol via agentrouter.org (paid gateway)
 - **Any custom endpoint** — add one interactively with `/add-model` (auto-detects a `/models` catalog or falls back to manual entry)
 
 Manage with `/provider-models status`, `/provider-models refresh`, and `/provider-models list`.
 
-For Claude (`anthropic-messages`) or other providers that the dynamic extension does not cover,
-add them directly to `~/.pi/agent/models.json` — see `models.md` in the pi docs for the schema.
+For providers the dynamic extension does not cover, add them directly to `~/.pi/agent/models.json` — see `models.md` in the pi docs for the schema.
 
 ---
 
