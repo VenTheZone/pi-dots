@@ -1,7 +1,7 @@
 ---
 name: refactor-cleaner
 description: "Refactoring and dead code cleanup specialist. Use when identifying unused code, consolidating duplicates, removing unused dependencies, or performing safe codebase cleanup with deletion tracking."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/stepfun/step-3.7-flash:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

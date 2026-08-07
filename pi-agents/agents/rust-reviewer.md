@@ -1,7 +1,7 @@
 ---
 name: rust-reviewer
 description: "Rust code review specialist for ownership, memory safety, error handling, and idiomatic patterns. Use when reviewing Rust code changes, checking for ownership/borrowing issues, auditing unsafe blocks, or enforcing Rust best practices."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-ultra-550b-a55b:free
 tools: read, grep, find, ls, bash
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: doc-updater
 description: "Documentation and codemap specialist keeping docs in sync with the actual codebase. Use when generating or updating architecture codemaps, refreshing READMEs after feature or API changes, validating doc links and examples, or auditing which files, endpoints, or dependencies the docs mention."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/poolside/laguna-s-2.1:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

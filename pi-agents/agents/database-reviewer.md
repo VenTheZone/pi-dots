@@ -1,7 +1,7 @@
 ---
 name: database-reviewer
 description: "PostgreSQL specialist for query optimization, schema design, Row Level Security, and performance review. Use when reviewing SQL for slow queries and missing indexes, designing schemas, adding RLS policies, fixing N+1 patterns, or tuning concurrency and connection management."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/tencent/hy3:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: architect
 description: "Software architecture specialist for system design, trade-off analysis, and architecture decision records. Use when designing new features, evaluating technical trade-offs, planning system scalability, or creating ADRs."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/tencent/hy3:free
 tools: read, grep, find, ls, bash
 ---
 

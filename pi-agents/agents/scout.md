@@ -1,7 +1,7 @@
 ---
 name: scout
 description: Fast codebase recon that returns compressed context for handoff to other agents.
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/poolside/laguna-xs-2.1:free
 tools: read, grep, find, ls, bash
 ---
 

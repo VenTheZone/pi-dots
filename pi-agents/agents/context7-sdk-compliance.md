@@ -1,7 +1,7 @@
 ---
 name: context7-sdk-compliance
 description: "SDK compliance reviewer validating library usage against official documentation. Use when adding or upgrading SDK integrations, reviewing smart-contract interactions, checking for deprecated APIs, or confirming code follows current SDK best practices and type safety."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/cohere/north-mini-code:free
 tools: read, grep, find, ls, bash, context7_query-docs, context7_resolve-library-id
 ---
 

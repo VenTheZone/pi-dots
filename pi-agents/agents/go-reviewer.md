@@ -1,7 +1,7 @@
 ---
 name: go-reviewer
 description: "Senior Go code reviewer enforcing idiomatic Go, security, error handling, and concurrency best practices. Use when reviewing Go diffs for SQL/command injection, race conditions, ignored errors, non-idiomatic patterns, or performance issues before merging."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-ultra-550b-a55b:free
 tools: read, grep, find, ls, bash
 ---
 

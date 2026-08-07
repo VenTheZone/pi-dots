@@ -1,7 +1,7 @@
 ---
 name: go-build-resolver
 description: "Go build error resolver fixing compile errors, go vet warnings, and linter issues. Use when go build fails, vet or staticcheck reports warnings, a module/import cycle appears, or interfaces don't satisfy — with minimal, surgical changes and no refactoring."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/stepfun/step-3.7-flash:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: code-reviewer
 description: "Senior code reviewer ensuring high standards of quality, security, and performance in pull requests and diffs. Use when reviewing code changes for bugs, security vulnerabilities, readability, test coverage, or performance regressions before merging."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-super-120b-a12b:free
 tools: read, grep, find, ls, bash
 ---
 

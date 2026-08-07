@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Code review specialist for quality, correctness, and security analysis.
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-super-120b-a12b:free
 tools: read, grep, find, ls, bash
 ---
 

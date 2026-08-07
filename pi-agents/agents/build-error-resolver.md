@@ -1,7 +1,7 @@
 ---
 name: build-error-resolver
 description: "TypeScript and frontend build error resolver fixing type errors, module resolution, and config failures. Use when tsc --noEmit or npm run build fails, imports can't be resolved, or tsconfig/webpack/Next.js config errors block development — with minimal diffs and no architectural changes."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/stepfun/step-3.7-flash:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

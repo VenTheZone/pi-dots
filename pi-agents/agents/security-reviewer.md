@@ -1,7 +1,7 @@
 ---
 name: security-reviewer
 description: "Security review specialist for web application vulnerability detection and remediation. Use when reviewing code for OWASP Top 10 issues, detecting hardcoded secrets, validating authentication/authorization, or auditing dependencies."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-super-120b-a12b:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

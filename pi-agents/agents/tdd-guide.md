@@ -1,7 +1,7 @@
 ---
 name: tdd-guide
 description: "Test-driven development specialist enforcing write-tests-first workflows with comprehensive coverage. Use when developing new features, fixing bugs with regression tests, guiding developers through the red-green-refactor cycle, or ensuring 80%+ unit, integration, and E2E coverage."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/cohere/north-mini-code:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

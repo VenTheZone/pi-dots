@@ -1,7 +1,7 @@
 ---
 name: planner
 description: "Implementation planning specialist creating comprehensive, actionable step-by-step plans. Use when breaking down a feature request, sequencing implementation phases, identifying dependencies and risks before coding, or planning refactors with minimal disruption."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/tencent/hy3:free
 tools: read, grep, find, ls, bash
 ---
 

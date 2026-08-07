@@ -1,7 +1,7 @@
 ---
 name: external-scout
 description: Research external open source projects, clone them to /tmp/, analyze code patterns, and provide findings for planning.
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/inclusionai/ling-3.0-tiny:free
 tools: read, write, bash, find, grep, ls
 ---
 

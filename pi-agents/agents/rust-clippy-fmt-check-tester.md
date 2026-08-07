@@ -1,7 +1,7 @@
 ---
 name: rust-clippy-fmt-check-tester
 description: "Rust build/quality error resolver fixing compile errors, clippy warnings, fmt issues, and test failures. Use when cargo build, clippy, fmt --check, or tests fail and you need minimal surgical fixes without refactoring the codebase."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/stepfun/step-3.7-flash:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

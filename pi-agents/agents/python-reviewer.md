@@ -1,7 +1,7 @@
 ---
 name: python-reviewer
 description: "Senior Python code reviewer enforcing PEP 8, Pythonic idioms, type hints, security, and performance. Use when reviewing Python diffs for injection or eval risks, bare excepts, missing type hints, non-idiomatic patterns, concurrency bugs, or before merging any Python code change."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/nvidia/nemotron-3-super-120b-a12b:free
 tools: read, grep, find, ls, bash
 ---
 

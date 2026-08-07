@@ -1,7 +1,7 @@
 ---
 name: e2e-runner
 description: "End-to-end test specialist for creating, maintaining, and executing Playwright tests with artifact and flaky-test management. Use when writing E2E tests for critical user journeys, debugging failures from HTML/JUnit reports, hunting flaky tests, or wiring E2E into CI."
-model: opencode/deepseek-v4-flash-free
+model: kilo-gateway/stepfun/step-3.7-flash:free
 tools: read, grep, find, ls, bash, write, edit
 ---
 
