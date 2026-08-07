@@ -8,10 +8,7 @@ Fetches model catalogs from live endpoints, caches results locally, and register
 
 | Provider | Source | Models |
 |----------|--------|--------|
-| `openrouter` | [openrouter.ai/api/v1/models](https://openrouter.ai/api/v1/models) | All OpenRouter models (350+) |
-| `kilo-gateway` | [api.kilo.ai/api/gateway/models](https://api.kilo.ai/api/gateway/models) | All Kilo Gateway models (350+) |
 | `cline` | [api.cline.bot/api/v1/ai/cline/models](https://api.cline.bot/api/v1/ai/cline/models) | All Cline models (500+) + 3 static free models |
-| `nvidia-nim` | [api.nvidia.com/v1/models](https://api.nvidia.com/v1/models) | All NVIDIA NIM models (e.g., Llama, Nemotron, Nemo) |
 
 ### Cline free models
 
@@ -22,35 +19,6 @@ Cline documents three free models ([docs.cline.bot/api/models](https://docs.clin
 - `z-ai/glm-5` — GLM-5 Free (128K context)
 
 These are registered as static models so they're always available, even if the model list fetch fails.
-
-## Provider Details
-
-### NVIDIA NIM
-
-- **Enabled by default**: `false` (explicit opt-in)
-- **Endpoint**: `https://api.nvidia.com/v1`
-- **Models endpoint**: `https://api.nvidia.com/v1/models`
-- **Auth**: Bearer token (`NVIDIA_API_KEY`)
-- **Pricing**: The NIM models endpoint does not return pricing information. Costs will appear as unknown (`$?/$?`). To display pricing, add `modelOverrides` with cost information in your config:
-
-```json
-{
-  "providers": {
-    "nvidia-nim": {
-      "enabled": true,
-      "modelOverrides": {
-        "meta/llama-3-70b-instruct": {
-          "cost": { "input": 0.35, "output": 0.50 }
-        }
-      }
-    }
-  }
-}
-```
-- **Context windows**: Determined from `max_model_len` field with fallback to `defaultContextWindow` (128K).
-- **Max output**: Determined from `max_output_tokens` or `max_tokens` with fallback to `defaultMaxTokens` (4096).
-
-Get your NVIDIA API key from https://api.nvidia.com.
 
 ## Model display
 
@@ -79,13 +47,10 @@ Project config overrides global config. Both are optional — built-in defaults 
 
 ## API keys
 
-Set these environment variables for each provider:
+Set the environment variable for the provider:
 
 ```bash
-export OPENROUTER_API_KEY="your-openrouter-key"
-export KILO_API_KEY="your-kilo-key"
 export CLINE_API_KEY="your-cline-key"
-export NVIDIA_API_KEY="your-nvidia-key"
 ```
 
 Or configure in the global config file:
@@ -93,10 +58,7 @@ Or configure in the global config file:
 ```json
 {
   "providers": {
-    "openrouter": { "apiKey": "OPENROUTER_API_KEY" },
-    "kilo-gateway": { "apiKey": "KILO_API_KEY" },
-    "cline": { "apiKey": "CLINE_API_KEY" },
-    "nvidia-nim": { "apiKey": "NVIDIA_API_KEY" }
+    "cline": { "apiKey": "CLINE_API_KEY" }
   }
 }
 ```
@@ -104,11 +66,94 @@ Or configure in the global config file:
 ## Commands
 
 | Command | What it does |
-|---------|--------------|
+|---------|-------------|
 | `/provider-models status` | Show loaded provider counts and sources |
 | `/provider-models refresh` | Force a fresh fetch from all endpoints |
 | `/provider-models list` | List all models across providers |
-| `/provider-models list openrouter` | List models for one provider |
+| `/provider-models list cline` | List models for one provider |
+| `/add-model` | **Interactive wizard** — add a custom endpoint (no JSON editing needed) |
+
+## Adding a custom endpoint
+
+```
+/add-model
+```
+
+The wizard will guide you step by step:
+
+1. **Endpoint base URL** — paste the base URL of your API, e.g. `https://api.my-server.com/v1`.
+   The wizard does not ask you to type `/models` — it appends that itself.
+
+2. **Model auto-discovery** — the wizard probes these paths in order:
+
+   ```
+   {url}/v1/models
+   {url}/models
+   {url}/openai/v1/models
+   {url}/api/v1/models
+   ```
+
+   If one of them responds, models are auto-detected with their:
+   - **id** and **display name**
+   - **context window** (from `context_length`, `context_window`, or `max_input_tokens`)
+   - **max output tokens** (from `max_tokens` or `max_output_tokens`)
+   - **reasoning support** (from `supported_parameters`)
+   - **image input** (from `architecture.input_modalities`)
+
+   You then pick which models to keep via a selector.
+   Select the first option to add all of them.
+
+   If no /models endpoint is reachable, the wizard falls back to a **manual
+   entry** — you type the model id and name yourself.
+
+3. **API key** (optional if your server does not need one).
+   If you enter a key it is saved to `~/.pi/agent/auth.json`.
+
+4. **Provider id and display name** — derived from the URL hostname.
+   Edit them if you want something different.
+
+5. **Confirmation** — the wizard summarises the entry and asks you to confirm.
+
+### Files written
+
+| File | Content |
+|------|---------|
+| `~/.pi/agent/models.json` | New provider entry (merged with existing content) |
+| `~/.pi/agent/auth.json` | API key, if you entered one |
+
+After the wizard finishes run:
+
+```
+/provider-models refresh
+```
+
+to load the new models. They also appear automatically on the next session start.
+
+### Example models.json entry created by the wizard
+
+```json
+{
+  "providers": {
+    "foo-ai-compatible": {
+      "baseUrl": "https://api.foo.ai/v1",
+      "api": "openai-completions",
+      "authHeader": true,
+      "displayName": "Foo AI (Custom)",
+      "apiKey": "FOO_API_KEY",
+      "models": [
+        {
+          "id": "model-a",
+          "name": "Model A",
+          "reasoning": false,
+          "input": ["text"],
+          "contextWindow": 128000,
+          "maxTokens": 16384
+        }
+      ]
+    }
+  }
+}
+```
 
 ## Cache
 
