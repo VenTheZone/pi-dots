@@ -41,7 +41,7 @@ export interface ProviderSummary {
   providerName: string;
   displayName: string;
   modelCount: number;
-  source: "live" | "cache" | "stale-cache" | "builtin-fallback" | "static";
+  source: "live" | "cache" | "stale-cache" | "static";
   ageMinutes: number;
   fetchedFrom?: string;
   error?: string;
@@ -186,7 +186,7 @@ export async function loadProviderModels(
         providerName,
         displayName,
         modelCount: 0,
-        source: providerName === "openrouter" ? "builtin-fallback" : "stale-cache",
+        source: "stale-cache",
         ageMinutes: 0,
         ...(config.modelsUrl ? { fetchedFrom: config.modelsUrl } : {}),
         error: message,

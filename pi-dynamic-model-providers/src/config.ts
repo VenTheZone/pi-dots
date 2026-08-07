@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
 
-export type ProviderKind = "openrouter" | "kilo-gateway" | "openai-compatible" | "cline" | "nvidia-nim";
+export type ProviderKind = "openai-compatible" | "cline";
 export type ProviderApi = "openai-completions" | "openai-responses";
 
 export interface ModelCost {
@@ -68,45 +68,6 @@ export const CACHE_PATH = join(homedir(), ".pi", "agent", "cache", "dynamic-mode
 export const DEFAULT_CONFIG: DynamicProvidersConfig = {
   cacheTtlHours: 12,
   providers: {
-    openrouter: {
-      enabled: true,
-      kind: "openrouter",
-      displayName: "OpenRouter",
-      baseUrl: "https://openrouter.ai/api/v1",
-      modelsUrl: "https://openrouter.ai/api/v1/models",
-      api: "openai-completions",
-      apiKey: "OPENROUTER_API_KEY",
-      authHeader: true,
-      headers: {
-        "HTTP-Referer": "https://github.com/VenTheZone/pi-dots",
-        "X-Title": "pi-dots",
-      },
-      maxModels: 350,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-      modelOverrides: {
-        "openrouter/free": { name: "OpenRouter Auto-Router" },
-      // MiniMax M2.7 has 205k context window (not 197k from API)
-      "minimax/minimax-m2.7": { contextWindow: 205000 },
-      // Kimi K2.5 has 256k context window (not 262k from API)
-      "moonshotai/kimi-k2.5": { contextWindow: 256000 },
-      },
-    },
-    "kilo-gateway": {
-      enabled: true,
-      kind: "kilo-gateway",
-      displayName: "Kilo Gateway",
-      baseUrl: "https://api.kilo.ai/api/gateway",
-      modelsUrl: "https://api.kilo.ai/api/gateway/models",
-      api: "openai-completions",
-      apiKey: "KILO_API_KEY",
-      authHeader: true,
-      maxModels: 350,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-    },
     cline: {
       enabled: true,
       kind: "cline",
@@ -144,51 +105,6 @@ export const DEFAULT_CONFIG: DynamicProvidersConfig = {
           maxTokens: 16384,
         },
       ],
-    },
-    "nvidia-nim": {
-      enabled: true,
-      kind: "nvidia-nim",
-      displayName: "NVIDIA NIM",
-      baseUrl: "https://integrate.api.nvidia.com/v1",
-      modelsUrl: "https://integrate.api.nvidia.com/v1/models",
-      api: "openai-completions",
-      apiKey: "NVIDIA_API_KEY",
-      authHeader: true,
-      headers: {
-        "Accept": "application/json",
-      },
-      maxModels: 500,
-      // NVIDIA NIM free tier has 40 RPM limit for model listing
-      requestsPerMinute: 40,
-      assumeFree: true,
-      defaultContextWindow: 128000,
-      defaultMaxTokens: 16384,
-      defaultReasoning: false,
-      modelOverrides: {
-        // DeepSeek V3.2 on NIM is NVFP4-quantized (nvidia/DeepSeek-V3.2-NVFP4), not the full FP8 model
-        "deepseek-ai/deepseek-v3.2": {
-          name: "DeepSeek V3.2 (NVFP4)",
-          contextWindow: 128000,
-          maxTokens: 32768,
-        },
-        // Kimi-K2.5 has 256k context window
-        "moonshotai/kimi-k2.5": {
-          name: "Kimi K2.5",
-          contextWindow: 256000,
-          maxTokens: 32768,
-        },
-        // Kimi-K2 also has extended context
-        "moonshotai/kimi-k2": {
-          name: "Kimi K2",
-          contextWindow: 256000,
-          maxTokens: 32768,
-        },
-        "moonshotai/kimi-k2-instruct": {
-          name: "Kimi K2 Instruct",
-          contextWindow: 256000,
-          maxTokens: 32768,
-        },
-      },
     },
   },
 };
@@ -291,7 +207,7 @@ function mergeModelOverride(base: ModelOverride | undefined, raw: Record<string,
 function filterProviderFields(raw: Record<string, unknown>): DynamicProviderConfig {
   const next: DynamicProviderConfig = {};
   if (typeof raw.enabled === "boolean") next.enabled = raw.enabled;
-  if (raw.kind === "openrouter" || raw.kind === "kilo-gateway" || raw.kind === "openai-compatible" || raw.kind === "cline" || raw.kind === "nvidia-nim") next.kind = raw.kind;
+  if (raw.kind === "openai-compatible" || raw.kind === "cline") next.kind = raw.kind;
   if (typeof raw.displayName === "string") next.displayName = raw.displayName;
   if (typeof raw.baseUrl === "string") next.baseUrl = raw.baseUrl;
   if (typeof raw.modelsUrl === "string") next.modelsUrl = raw.modelsUrl;

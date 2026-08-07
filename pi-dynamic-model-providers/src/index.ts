@@ -1,6 +1,7 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { DEFAULT_CONFIG, loadConfig, type DynamicProvidersConfig } from "./config.js";
 import { formatSummary, loadProviderModels, readCache, toRuntimeProviderConfig, type LoadedProvider } from "./providers.js";
+import { runAddModelWizard } from "./add-model-wizard.js";
 
 const STATUS_KEY = "dynamic-provider-models";
 
@@ -115,6 +116,13 @@ export default function dynamicModelProviders(pi: ExtensionAPI): void {
 
   pi.on("session_shutdown", async (_event, ctx) => {
     ctx.ui.setStatus(STATUS_KEY, undefined);
+  });
+
+  pi.registerCommand("add-model", {
+    description: "Add a custom OpenAI-compatible endpoint (models.json + auth.json)",
+    handler: async (_args, ctx) => {
+      await runAddModelWizard(ctx);
+    },
   });
 
   pi.registerCommand("provider-models", {
