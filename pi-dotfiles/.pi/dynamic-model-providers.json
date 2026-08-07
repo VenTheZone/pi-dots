@@ -73,6 +73,21 @@
           "maxTokens": 32768
         }
       ]
+    },
+    "modal-compatible": {
+      "enabled": true,
+      "displayName": "Modal Direct (GLM)",
+      "api": "openai-completions",
+      "baseUrl": "https://api.us-west-2.modal.direct/v1",
+      "modelsUrl": "https://api.us-west-2.modal.direct/v1/models",
+      "apiKey": "!node -e \"const{readFileSync}=require('fs'),{homedir}=require('os');process.stdout.write(process.env.MODAL_API_KEY||JSON.parse(readFileSync(homedir()+'/.pi/agent/auth.json'))['modal-compatible'].key||'')\"",
+      "authHeader": true,
+      "include": [
+        "*"
+      ],
+      "maxModels": 20,
+      "defaultContextWindow": 128000,
+      "defaultMaxTokens": 16384
     }
   }
 }
