@@ -7,7 +7,16 @@
     },
     "kilo-gateway": {
       "enabled": true,
-      "apiKey": "KILO_API_KEY"
+      "kind": "openai-compatible",
+      "api": "openai-completions",
+      "baseUrl": "https://api.kilo.ai/api/gateway/v1",
+      "modelsUrl": "https://api.kilo.ai/api/gateway/models",
+      "apiKey": "KILO_API_KEY",
+      "authHeader": true,
+      "defaultContextWindow": 131072,
+      "defaultMaxTokens": 16384,
+      "defaultReasoning": true,
+      "include": ["*:free", "kilo-auto/free"]
     },
     "cline-free": {
       "enabled": true,

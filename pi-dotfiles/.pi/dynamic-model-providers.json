@@ -7,7 +7,25 @@
     },
     "kilo-gateway": {
       "enabled": true,
-      "apiKey": "KILO_API_KEY"
+      "displayName": "Kilo Gateway",
+      "kind": "openai-compatible",
+      "api": "openai-completions",
+      "baseUrl": "https://api.kilo.ai/api/gateway/v1",
+      "modelsUrl": "https://api.kilo.ai/api/gateway/models",
+      "apiKey": "!node -e \"const{readFileSync}=require('fs'),{homedir}=require('os');const d=JSON.parse(readFileSync(homedir()+'/.pi/agent/auth.json'));process.stdout.write((d['kilo-gateway']||{}).access||'')\"",
+      "authHeader": true,
+      "defaultContextWindow": 131072,
+      "defaultMaxTokens": 16384,
+      "defaultReasoning": true,
+      "include": ["*:free", "kilo-auto/free"],
+      "maxModels": 200,
+      "modelOverrides": {
+        "kilo-auto/free": {
+          "name": "Kilo Auto Free (auto-routes to cheapest free model)",
+          "contextWindow": 131072,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }
+      }
     }
   }
 }

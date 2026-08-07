@@ -9,16 +9,26 @@ Fetches model catalogs from live endpoints, caches results locally, and register
 | Provider | Source | Models |
 |----------|--------|--------|
 | `cline` | [api.cline.bot/api/v1/ai/cline/models](https://api.cline.bot/api/v1/ai/cline/models) | All Cline models (500+) + 3 static free models |
+| `kilo-gateway` | [api.kilo.ai/api/gateway](https://api.kilo.ai/api/gateway) | Free models via Kilo's gateway (`kilo-auto/free` + `*:free` tier) |
 
 ### Cline free models
 
 Cline documents three free models ([docs.cline.bot/api/models](https://docs.cline.bot/api/models)):
 
 - `minimax/minimax-m2.5` — MiniMax M2.5 Free (1M context)
-- `kwaipilot/kat-coder-pro` — KAT Coder Pro Free (32K context)
+- `kwaipilot/kat-coder-pro` — KAT Coder Pro (32K context)
 - `z-ai/glm-5` — GLM-5 Free (128K context)
 
 These are registered as static models so they're always available, even if the model list fetch fails.
+
+### Kilo Gateway
+
+`kilo-gateway` points pi at `https://api.kilo.ai/api/gateway` and exposes only the free tier:
+
+- `kilo-auto/free` — auto-routes to the cheapest free model available (default)
+- every `:free` model served by the gateway (DeepSeek, Nemotron, Llama, Poolside, Qwen, etc.)
+
+Auth is an OAuth bearer token. The config reads it from `~/.pi/agent/auth.json` under the `kilo-gateway` key at runtime, so no key is committed to the repo. To store a key instead, set the `KILO_API_KEY` environment variable.
 
 ## Model display
 
