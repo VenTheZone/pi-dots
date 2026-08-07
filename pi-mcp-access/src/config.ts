@@ -15,6 +15,8 @@ export interface McpServerConfig {
   cwd?: string;
   headers?: Record<string, string>;
   toolPrefix?: string;
+  /** Request timeout in milliseconds. Defaults to 60000 (60 seconds). */
+  timeout?: number;
 }
 
 export interface McpConfig {
@@ -83,6 +85,8 @@ export function mergeConfig(base: McpConfig, raw: unknown): McpConfig {
       else if (current.headers) merged.headers = { ...current.headers };
       if (typeof value.toolPrefix === "string") merged.toolPrefix = value.toolPrefix;
       else if (typeof current.toolPrefix === "string") merged.toolPrefix = current.toolPrefix;
+      if (typeof value.timeout === "number") merged.timeout = value.timeout;
+      else if (current.timeout !== undefined) merged.timeout = current.timeout;
       next.servers[name] = merged;
     }
   }

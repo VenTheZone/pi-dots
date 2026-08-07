@@ -17,11 +17,12 @@ export interface McpToolBinding {
   description?: string | undefined;
   inputSchema?: Record<string, unknown> | undefined;
   client: McpClientLike;
+  timeout?: number | undefined;
 }
 
 export interface McpClientLike {
   listTools(): Promise<{ tools: unknown[] }>;
-  callTool(params: { name: string; arguments?: Record<string, unknown> }): Promise<any>;
+  callTool(params: { name: string; arguments?: Record<string, unknown> }, resultSchema?: unknown, options?: { timeout?: number }): Promise<any>;
   close(): Promise<void>;
 }
 
@@ -106,6 +107,7 @@ export async function listBindings(
       description: tool.description,
       inputSchema: tool.inputSchema,
       client,
+      timeout: config.timeout,
     })),
   );
 }
@@ -125,7 +127,8 @@ export async function executeBinding(
   binding: McpToolBinding,
   args: Record<string, unknown>,
 ): Promise<{ content: PiToolContent[]; details: Record<string, unknown>; isError: boolean }> {
-  const result = (await binding.client.callTool({ name: binding.originalName, arguments: args })) as McpCallToolResult;
+  const options = binding.timeout !== undefined ? { timeout: binding.timeout } : undefined;
+  const result = (await binding.client.callTool({ name: binding.originalName, arguments: args }, undefined, options)) as McpCallToolResult;
   const content = mcpResultToPiContent(result);
   return {
     content,
