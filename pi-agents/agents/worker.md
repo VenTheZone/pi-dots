@@ -1,7 +1,7 @@
 ---
 name: worker
 description: General-purpose subagent with full coding capabilities in an isolated context.
-model: kilo-gateway/minimax/minimax-m2.5:free
+model: opencode/deepseek-v4-flash-free
 tools: read, grep, find, ls, bash, write, edit
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Code review specialist for quality, correctness, and security analysis.
-model: kilo-gateway/xiaomi/mimo-v2-pro:free
+model: opencode/deepseek-v4-flash-free
 tools: read, grep, find, ls, bash
 ---
 
